@@ -34,8 +34,28 @@ app.get('/', (req, res) => {
 //movements
 //get all movements
 app.get('/movements', async (req, res) => {
+  
+  let query;
+
+  //get movements using operation type filter
+  if(req.query.type){
+    const type = req.query.type;
+    query = `SELECT * FROM movements WHERE mov_type_id = '${type}'`;
+  }
+  //get movements using month filter
+  else if(req.query.month){
+    const month = req.query.month;
+    query = `SELECT * FROM movements WHERE EXTRACT(MONTH FROM mov_date) = ${month}`
+  }
+  //if not using queries, get all movements
+  else
+  {
+    query = 'SELECT * FROM movements';
+  }
+
+  //execute query
   try {
-    const movements = await pool.query('SELECT * FROM movements');
+    const movements = await pool.query(query);
     res.json(movements.rows);
   } catch (error) {
     console.error(error.message);
@@ -54,9 +74,9 @@ app.get('/movements/:id', async (req, res) => {
 //create movement
 app.post('/movements', async (req, res) => {
   try {
-    const { user_id, mov_date, mov_type_id, mov_description, amount } = req.body;
+    const { id, date, type, description, amount } = req.body;
     const newMovement = await pool.query('INSERT INTO movements (user_id, mov_date, mov_type_id, mov_description, amount) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [user_id, mov_date, mov_type_id, mov_description, amount]);
+      [id, date, type, description, amount]);
     res.json(newMovement.rows);
   } catch (error) {
     console.error(error.message);
@@ -76,16 +96,14 @@ app.delete('/movements/:id', async (req, res) => {
 app.put('/movements/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { mov_date, mov_description, amount } = req.body;
+    const { date, description, amount } = req.body;
     const updateMovement = await pool.query('UPDATE movements SET mov_date = $1, mov_description = $2, amount = $3 WHERE id = $4 RETURNING *',
-      [mov_date, mov_description, amount, id]);
+      [date, description, amount, id]);
     res.json(updateMovement.rows);
   } catch (error) {
     console.error(error.message);
   }
 })
-
-
 
 // *********************************************************************************************
 
