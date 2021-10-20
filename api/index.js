@@ -69,6 +69,15 @@ app.get('/movements', async (req, res) => {
     console.error(error.message);
   }
 })
+//get last 10 movements
+app.get('/movements/recent', async (req, res) => {
+  try {
+    const recent_movements = await pool.query('SELECT * FROM movements ORDER BY mov_date DESC LIMIT 10');
+    res.json(recent_movements.rows);
+  }catch (error) {
+    console.error(error.message);
+  }
+})
 //get one movement
 app.get('/movements/:id', async (req, res) => {
   try {
