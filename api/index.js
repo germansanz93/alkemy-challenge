@@ -37,15 +37,23 @@ app.get('/movements', async (req, res) => {
   
   let query;
 
+  //get movements using operation type and month filters
+  if (req.query.type && req.query.month) {
+    const { type, month } = req.query;
+    query = {text: 'SELECT * FROM movements WHERE EXTRACT(MONTH FROM mov_date) = $1 AND mov_type_id = $2',
+            values: [month, type]};
+  }
   //get movements using operation type filter
-  if(req.query.type){
+  else if(req.query.type){
     const type = req.query.type;
-    query = `SELECT * FROM movements WHERE mov_type_id = '${type}'`;
+    query = {text: 'SELECT * FROM movements WHERE mov_type_id = $1',
+            values: [type]};
   }
   //get movements using month filter
   else if(req.query.month){
     const month = req.query.month;
-    query = `SELECT * FROM movements WHERE EXTRACT(MONTH FROM mov_date) = ${month}`
+    query = {text: 'SELECT * FROM movements WHERE EXTRACT(MONTH FROM mov_date) = $1',
+            values: [month]};
   }
   //if not using queries, get all movements
   else
