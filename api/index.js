@@ -7,6 +7,7 @@ const {Pool} = require('pg');
 // express
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
 // db
 if (process.env.NODE_ENV !== 'production') {
@@ -24,10 +25,13 @@ const pool = new Pool(config);
 // *********************************************************************************************
 
 //routes
+
+//home
 app.get('/', (req, res) => {
   res.send('Hello World');
 })
 
+//movements
 //get all movements
 app.get('/movements', async(req, res) => {
   try {
@@ -37,6 +41,28 @@ app.get('/movements', async(req, res) => {
     console.error(error.message);
   }
 })
+//get one movement
+app.get('/movements/:id', async(req, res) => {
+  try {
+      const {id} = req.params;
+      const movement = await pool.query('SELECT * FROM movements WHERE id = $1', [id]);
+      res.json(movement.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+//create movement
+app.post('/movements', async(req, res) => {
+  try{
+    const {user_id, mov_date, mov_type_id, mov_description, amount} = req.body;
+    const newMovement = await pool.query('INSERT INTO movements (user_id, mov_date, mov_type_id, mov_description, amount) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [user_id, mov_date, mov_type_id, mov_description, amount]);
+    res.json(newMovement.rows);
+  }catch(error){
+    console.error(error.message);
+  }
+})
+
 
 // *********************************************************************************************
 
