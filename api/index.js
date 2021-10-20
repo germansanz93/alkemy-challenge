@@ -1,6 +1,6 @@
 //third party modules
 const express = require('express');
-const {Pool} = require('pg');
+const { Pool } = require('pg');
 
 // *********************************************************************************************
 //settings
@@ -33,35 +33,58 @@ app.get('/', (req, res) => {
 
 //movements
 //get all movements
-app.get('/movements', async(req, res) => {
+app.get('/movements', async (req, res) => {
   try {
-      const movements = await pool.query('SELECT * FROM movements');
-      res.json(movements.rows);
+    const movements = await pool.query('SELECT * FROM movements');
+    res.json(movements.rows);
   } catch (error) {
     console.error(error.message);
   }
 })
 //get one movement
-app.get('/movements/:id', async(req, res) => {
+app.get('/movements/:id', async (req, res) => {
   try {
-      const {id} = req.params;
-      const movement = await pool.query('SELECT * FROM movements WHERE id = $1', [id]);
-      res.json(movement.rows);
+    const { id } = req.params;
+    const movement = await pool.query('SELECT * FROM movements WHERE id = $1', [id]);
+    res.json(movement.rows);
   } catch (error) {
     console.error(error.message);
   }
 })
 //create movement
-app.post('/movements', async(req, res) => {
-  try{
-    const {user_id, mov_date, mov_type_id, mov_description, amount} = req.body;
+app.post('/movements', async (req, res) => {
+  try {
+    const { user_id, mov_date, mov_type_id, mov_description, amount } = req.body;
     const newMovement = await pool.query('INSERT INTO movements (user_id, mov_date, mov_type_id, mov_description, amount) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [user_id, mov_date, mov_type_id, mov_description, amount]);
     res.json(newMovement.rows);
-  }catch(error){
+  } catch (error) {
     console.error(error.message);
   }
 })
+//delete movement
+app.delete('/movements/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteMovement = await pool.query('DELETE FROM movements WHERE id = $1 RETURNING *', [id]);
+    res.json(deleteMovement.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+//update movement
+app.put('/movements/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { mov_date, mov_description, amount } = req.body;
+    const updateMovement = await pool.query('UPDATE movements SET mov_date = $1, mov_description = $2, amount = $3 WHERE id = $4 RETURNING *',
+      [mov_date, mov_description, amount, id]);
+    res.json(updateMovement.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
 
 
 // *********************************************************************************************
