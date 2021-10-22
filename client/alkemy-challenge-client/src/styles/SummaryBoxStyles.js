@@ -8,12 +8,13 @@ export default{
   title:{
     fontSize: '1rem',
     fontWeight: '100',
+    margin: '10px 0 0 0',
   },
   total:{
     width: '100%',
-    textAlign: 'center',
+    textAlign: 'end',
     fontSize: '2rem',
     color: '#683ab7',
-    margin: '10px 0',
+    margin: '4px 0 0 0',
   }
 }
