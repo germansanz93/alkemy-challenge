@@ -13,6 +13,10 @@ function Dashboard(props) {
   return (
     <div className={classes.mainContainer}>
       <h2>Dashboard</h2>
+      <div className={classes.card}>
+        <h3 className={classes.cardTitle}>Summary</h3>
+        <SummaryBox title={'Balance'} total={'$ 3333'} type={1}/>
+      </div>
       <div className={`${classes.summariesContainer} ${classes.card}`}>
         <h3 className={classes.cardTitle}>Monthly movements</h3>
         <SummaryBox title={'Total incomes:'} total={'$ 1234'} type={1}/>
