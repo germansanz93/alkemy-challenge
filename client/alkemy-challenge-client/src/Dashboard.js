@@ -5,6 +5,7 @@ import '../node_modules/react-vis/dist/style.css';
 
 import Plot from './Plot';
 import Recents from './Recents'
+import FloatingActionButton from './FlotatingActionBtn';
 import styles from './styles/DashboardStyles';
 
 function Dashboard(props) {
@@ -32,6 +33,7 @@ function Dashboard(props) {
         <h3 className={classes.cardTitle}>Recents</h3>
           <Recents/>
       </div>
+      <FloatingActionButton/>
     </div>
   )
 }
