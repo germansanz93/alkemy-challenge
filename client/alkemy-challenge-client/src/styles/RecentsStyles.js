@@ -8,7 +8,7 @@ export default {
     left: '0',
     bottom: '0',
     width: '8px',
-    backgroundColor: 'green',
+    backgroundColor: '#12939A',
   },
   leftColorBarRed: {
     position: 'absolute',
@@ -16,6 +16,6 @@ export default {
     left: '0',
     bottom: '0',
     width: '8px',
-    backgroundColor: 'red',
+    backgroundColor: '#9a1811',
   }
 };

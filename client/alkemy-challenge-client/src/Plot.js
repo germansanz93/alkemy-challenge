@@ -48,7 +48,7 @@ function Plot (props) {
               },
               {
                 title: 'Expenses',
-                color: '#683ab7'
+                color: '#9a1811'
               }
             ]}
           />
@@ -57,7 +57,7 @@ function Plot (props) {
           <XAxis />
           <YAxis />
           <VerticalBarSeries data={data} />
-          <VerticalBarSeries data={data2} color='#683ab7' />
+          <VerticalBarSeries data={data2} color='#9a1811' />
         </FlexibleXYPlot>
       </div>
   )

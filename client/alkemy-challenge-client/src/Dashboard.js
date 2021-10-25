@@ -13,18 +13,19 @@ function Dashboard(props) {
   return (
     <div className={classes.mainContainer}>
       <h2>Dashboard</h2>
-      <div className={classes.summariesContainer}>
-        <SummaryBox title={'Total incomes:'} total={'$ 1234'} />
-        <SummaryBox title={'Total expenses:'} total={'$ 1234'} />
-        <SummaryBox title={'Month incomes:'} total={'$ 1234'} />
-        <SummaryBox title={'Month expenses:'} total={'$ 1234'} />
+      <div className={`${classes.summariesContainer} ${classes.card}`}>
+        <h3 className={classes.cardTitle}>Monthly movements</h3>
+        <SummaryBox title={'Total incomes:'} total={'$ 1234'} type={1}/>
+        <SummaryBox title={'Total expenses:'} total={'$ 1234'} type={2}/>
+        <SummaryBox title={'Month incomes:'} total={'$ 1234'} type={1}/>
+        <SummaryBox title={'Month expenses:'} total={'$ 1234'} type={2}/>
       </div>
-      <div className={classes.barsContainer}>
-        <h3>Plot</h3>
+      <div className={`${classes.barsContainer} ${classes.card}`}>
+        <h3 className={classes.cardTitle}>Plot</h3>
         <Plot/>
       </div>
-      <div className={classes.recentsContainer}>
-        <h3>Recents</h3>
+      <div className={`${classes.recentsContainer} ${classes.card}`}>
+        <h3 className={classes.cardTitle}>Recents</h3>
           <Recents/>
       </div>
     </div>
