@@ -17,11 +17,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import CategoryIcon from "@mui/icons-material/Category";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PieChartIcon from '@mui/icons-material/PieChart';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import withStyles from "@mui/styles/withStyles";
 
 import styles from "./styles/AppbarStyles";
@@ -141,25 +141,25 @@ function PersistentDrawerLeft(props) {
           </ListItem>
           <ListItem button key="Movements">
             <ListItemIcon>
-              <SwapHorizIcon />
+              <ShuffleIcon />
             </ListItemIcon>
             <ListItemText primary="Movements" />
           </ListItem>
           <ListItem button key="Incomes">
             <ListItemIcon>
-              <AddIcon />
+              <KeyboardArrowUpIcon />
             </ListItemIcon>
             <ListItemText primary="Incomes" />
           </ListItem>
           <ListItem button key="Expenses">
             <ListItemIcon>
-              <RemoveIcon />
+              <KeyboardArrowDownIcon />
             </ListItemIcon>
             <ListItemText primary="Expenses" />
           </ListItem>
           <ListItem button key="Categories">
             <ListItemIcon>
-              <CategoryIcon />
+              <PieChartIcon />
             </ListItemIcon>
             <ListItemText primary="Categories" />
           </ListItem>

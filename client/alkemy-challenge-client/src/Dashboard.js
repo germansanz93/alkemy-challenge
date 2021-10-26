@@ -4,9 +4,9 @@ import SummaryBox from './SummaryBox';
 import '../node_modules/react-vis/dist/style.css';
 
 import Plot from './Plot';
-import Recents from './Recents'
-import FloatingActionButton from './FlotatingActionBtn';
+import Recents from './Recents';
 import styles from './styles/DashboardStyles';
+import MovementForm from './MovementForm';
 
 function Dashboard(props) {
   const { classes } = props;
@@ -33,7 +33,7 @@ function Dashboard(props) {
         <h3 className={classes.cardTitle}>Recents</h3>
           <Recents/>
       </div>
-      <FloatingActionButton/>
+      <MovementForm/>
     </div>
   )
 }
