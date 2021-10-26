@@ -1,6 +1,8 @@
 export default {
   root: {
     backgroundColor: "#683ab713",
+    padding: "4px !important",
+    height: 'calc(100vh - 56px)'
   },
   leftUsrPanel: {
     width: "100%",
@@ -8,5 +10,10 @@ export default {
   },
   appbar:{
     backgroundColor: "#683ab7 !important",
+  },
+  link:{
+    display: "flex",
+    textDecoration: "none",
+    color: "#444"
   }
 };
