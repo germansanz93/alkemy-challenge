@@ -25,6 +25,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import withStyles from "@mui/styles/withStyles";
 
 import styles from "./styles/AppbarStyles";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -76,7 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const {classes} = props;
+  const { classes } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,7 +104,7 @@ function PersistentDrawerLeft(props) {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Alkemy Challenge
           </Typography>
-          <Button color="inherit"><AccountCircleIcon fontSize="large"/></Button>
+          <Button color="inherit"><AccountCircleIcon fontSize="large" /></Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -121,7 +122,6 @@ function PersistentDrawerLeft(props) {
       >
         <DrawerHeader>
           <div className={classes.leftUsrPanel}>
-            {/* <AccountCircleIcon fontSize={"large"}/> */}
             <div>
               <Typography variant="h6" noWrap>User</Typography>
               <Typography variant="h6" noWrap>Balance: $1234</Typography>
@@ -133,35 +133,45 @@ function PersistentDrawerLeft(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem button key="Dashboard">
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+          <ListItem button key="Dashboard" onClick={handleDrawerClose}>
+            <Link className={classes.link} to={"/"}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </Link>
           </ListItem>
-          <ListItem button key="Movements">
-            <ListItemIcon>
-              <ShuffleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Movements" />
+          <ListItem button key="Movements" onClick={handleDrawerClose}>
+            <Link className={classes.link} to={"/movements"}>
+              <ListItemIcon>
+                <ShuffleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Movements" />
+            </Link>
           </ListItem>
-          <ListItem button key="Incomes">
-            <ListItemIcon>
-              <KeyboardArrowUpIcon />
-            </ListItemIcon>
-            <ListItemText primary="Incomes" />
+          <ListItem button key="Incomes" onClick={handleDrawerClose}>
+            <Link className={classes.link} to={"/"}>
+              <ListItemIcon>
+                <KeyboardArrowUpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Incomes" />
+            </Link>
           </ListItem>
-          <ListItem button key="Expenses">
-            <ListItemIcon>
-              <KeyboardArrowDownIcon />
-            </ListItemIcon>
-            <ListItemText primary="Expenses" />
+          <ListItem button key="Expenses" onClick={handleDrawerClose}>
+            <Link className={classes.link} to={"/"}>
+              <ListItemIcon>
+                <KeyboardArrowDownIcon />
+              </ListItemIcon>
+              <ListItemText primary="Expenses" />
+            </Link>
           </ListItem>
-          <ListItem button key="Categories">
-            <ListItemIcon>
-              <PieChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Categories" />
+          <ListItem button key="Categories" onClick={handleDrawerClose}>
+            <Link className={classes.link} to={"/"}>
+              <ListItemIcon>
+                <PieChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Categories" />
+            </Link>
           </ListItem>
         </List>
       </Drawer>
