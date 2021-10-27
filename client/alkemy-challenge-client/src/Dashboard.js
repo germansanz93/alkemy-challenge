@@ -7,7 +7,7 @@ import Plot from './Plot';
 import Recents from './Recents';
 import styles from './styles/DashboardStyles';
 import MovementForm from './MovementForm';
-import FlotatingActionBtn from './FlotatingActionBtn';
+import FloatingActionBtn from './FloatingActionBtn';
 
 function Dashboard(props) {
   const { classes } = props;
@@ -40,7 +40,7 @@ function Dashboard(props) {
         <h3 className={classes.cardTitle}>Recents</h3>
           <Recents/>
       </div>
-      <FlotatingActionBtn onClick={handleOpen}/>
+      <FloatingActionBtn onClick={handleOpen}/>
       <MovementForm open={open} handleClose={handleClose}/>
     </div>
   )

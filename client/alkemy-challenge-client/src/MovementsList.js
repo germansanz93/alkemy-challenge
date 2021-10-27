@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import movements from './movementsSeed'
 import styles from "./styles/MovementsListStyles";
 import MovementForm from './MovementForm';
-
+import FloatingActionBtn from './FloatingActionBtn'; 
 
 class MovementsList extends React.Component {
   constructor(props) {
@@ -97,6 +97,7 @@ class MovementsList extends React.Component {
           ))}
         </InfiniteScroll>
         <div>
+          {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen}/>}
           <MovementForm open={this.state.open} handleClose={this.handleClose} />
         </div>
       </div>
