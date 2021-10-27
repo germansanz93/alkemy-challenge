@@ -2,7 +2,7 @@ export default {
   root: {
     backgroundColor: "#683ab713",
     padding: "4px !important",
-    height: 'calc(100vh - 56px)'
+    height: "100%",
   },
   leftUsrPanel: {
     width: "100%",

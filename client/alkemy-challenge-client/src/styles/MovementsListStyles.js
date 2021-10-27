@@ -6,6 +6,7 @@ export default {
   },
   movementsListContainer: {
     height: '100%',
+    backgroundColor: '#fff',
   },
   Listitem:{
     position: 'relative',

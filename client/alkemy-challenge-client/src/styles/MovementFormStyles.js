@@ -6,6 +6,8 @@ export default {
     transform: 'translate(-50%, -50%)',
     width: '100vw',
     height: '100vh',
+    minHeight: '590px',
+    paddingTop: '40px',
     backgroundColor: '#f4f0fa',
     boxShadow: 24,
   },
