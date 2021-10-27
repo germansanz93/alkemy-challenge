@@ -150,7 +150,7 @@ function PersistentDrawerLeft(props) {
             </Link>
           </ListItem>
           <ListItem button key="Incomes" onClick={handleDrawerClose}>
-            <Link className={classes.link} to={"/"}>
+            <Link className={classes.link} to={"/incomes"}>
               <ListItemIcon>
                 <KeyboardArrowUpIcon />
               </ListItemIcon>
@@ -158,7 +158,7 @@ function PersistentDrawerLeft(props) {
             </Link>
           </ListItem>
           <ListItem button key="Expenses" onClick={handleDrawerClose}>
-            <Link className={classes.link} to={"/"}>
+            <Link className={classes.link} to={"/expenses"}>
               <ListItemIcon>
                 <KeyboardArrowDownIcon />
               </ListItemIcon>

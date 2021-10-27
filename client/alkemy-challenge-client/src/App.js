@@ -28,6 +28,20 @@ class App extends Component {
             <Appbar children={<MovementsList />} />
           }
         />
+        <Route
+          exact
+          path="/incomes"
+          render={(routeProps) =>
+            <Appbar children={<MovementsList />} />
+          }
+        />
+        <Route
+          exact
+          path="/expenses"
+          render={(routeProps) =>
+            <Appbar children={<MovementsList />} />
+          }
+        />
       </Switch>
     )
   }
