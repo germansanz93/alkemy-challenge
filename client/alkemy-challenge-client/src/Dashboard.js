@@ -7,9 +7,16 @@ import Plot from './Plot';
 import Recents from './Recents';
 import styles from './styles/DashboardStyles';
 import MovementForm from './MovementForm';
+import FlotatingActionBtn from './FlotatingActionBtn';
 
 function Dashboard(props) {
   const { classes } = props;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = (e) => {
+    e.preventDefault();
+    setOpen(false);
+  }
 
   return (
     <div className={classes.mainContainer}>
@@ -33,7 +40,8 @@ function Dashboard(props) {
         <h3 className={classes.cardTitle}>Recents</h3>
           <Recents/>
       </div>
-      <MovementForm/>
+      <FlotatingActionBtn onClick={handleOpen}/>
+      <MovementForm open={open} handleClose={handleClose}/>
     </div>
   )
 }

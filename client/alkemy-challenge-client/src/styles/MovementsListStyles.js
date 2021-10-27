@@ -1,4 +1,9 @@
 export default {
+  container: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   movementsListContainer: {
     height: '100%',
   },
@@ -20,6 +25,6 @@ export default {
     bottom: '0',
     width: '8px',
     backgroundColor: '#9a1811',
-  }
+  },
 
 } 

@@ -17,29 +17,29 @@ class App extends Component {
         <Route
           exact
           path="/"
-          render={(routeProps) =>
+          render={() =>
             <Appbar children={<Dashboard />} />
           }
         />
         <Route
           exact
           path="/movements"
-          render={(routeProps) =>
-            <Appbar children={<MovementsList />} />
+          render={() =>
+            <Appbar children={<MovementsList title='Movements' fab={true}/>} />
           }
         />
         <Route
           exact
           path="/incomes"
-          render={(routeProps) =>
-            <Appbar children={<MovementsList />} />
+          render={() =>
+            <Appbar children={<MovementsList title='Incomes'/>} />
           }
         />
         <Route
           exact
           path="/expenses"
-          render={(routeProps) =>
-            <Appbar children={<MovementsList />} />
+          render={() =>
+            <Appbar children={<MovementsList title='Expenses'/>} />
           }
         />
       </Switch>

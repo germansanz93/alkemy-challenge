@@ -3,7 +3,6 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import FloatingActionButton from './FlotatingActionBtn';
 import withStyles from '@mui/styles/withStyles';
 import styles from './styles/MovementFormStyles';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -15,17 +14,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 function TransitionsModal(props) {
-  const { classes } = props;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = (e) => {
-    e.preventDefault();
-    setOpen(false);
-  }
-
+  const { classes, open, handleClose} = props;
+  
   return (
     <div>
-      <FloatingActionButton onClick={handleOpen}></FloatingActionButton>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
