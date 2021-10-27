@@ -1,10 +1,11 @@
 import React from 'react';
 import '../node_modules/react-vis/dist/style.css';
-import { FlexibleXYPlot, VerticalBarSeries, VerticalGridLines, HorizontalGridLines, DiscreteColorLegend, XAxis, YAxis } from 'react-vis';
+import { XYPlot, VerticalBarSeries, VerticalGridLines, HorizontalGridLines, DiscreteColorLegend, XAxis, YAxis } from 'react-vis';
 import withStyles from '@mui/styles/withStyles';
 import styles from './styles/PlotStyles';
+import {AutoSizer} from 'react-virtualized';
 
-function Plot (props) {
+function Plot(props) {
   const { classes } = props;
   const data = [
     { x: 1, y: 10 },
@@ -36,30 +37,34 @@ function Plot (props) {
   ]
 
   return (
-      <div className={classes.barsContainer}>
-        <FlexibleXYPlot>
-          <DiscreteColorLegend
-            style={{ position: 'absolute', left: '50px', top: '10px' }}
-            orientation="horizontal"
-            items={[
-              {
-                title: 'Incomes',
-                color: '#12939A'
-              },
-              {
-                title: 'Expenses',
-                color: '#9a1811'
-              }
-            ]}
-          />
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <XAxis />
-          <YAxis />
-          <VerticalBarSeries data={data} />
-          <VerticalBarSeries data={data2} color='#9a1811' />
-        </FlexibleXYPlot>
-      </div>
+    <div className={classes.barsContainer}>
+      <AutoSizer>
+        {({ height, width }) => (
+          <XYPlot height={height} width={width}>
+            <DiscreteColorLegend
+              style={{ position: 'absolute', left: '50px', top: '10px' }}
+              orientation="horizontal"
+              items={[
+                {
+                  title: 'Incomes',
+                  color: '#12939A'
+                },
+                {
+                  title: 'Expenses',
+                  color: '#9a1811'
+                }
+              ]}
+            />
+            <VerticalGridLines />
+            <HorizontalGridLines />
+            <XAxis />
+            <YAxis />
+            <VerticalBarSeries data={data} />
+            <VerticalBarSeries data={data2} color='#9a1811' />
+          </XYPlot>
+        )}
+      </AutoSizer>
+    </div>
   )
 }
 

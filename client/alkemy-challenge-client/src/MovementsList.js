@@ -1,84 +1,108 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import withStyles from "@mui/styles/withStyles";
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList } from 'react-window';
-import withStyles from '@mui/styles/withStyles';
-import { AutoSizer } from 'react-virtualized'
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 
-import FloatingActionButton from './FlotatingActionBtn';
-
-import styles from './styles/MovementsListStyles';
-import 'react-virtualized/styles.css';
-
-
-import movements from './movementsSeed';
+import movements from './movementsSeed'
+import styles from "./styles/MovementsListStyles";
 import MovementForm from './MovementForm';
 
-function MovementsList(props) {
-  const { classes, title, fab } = props;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = (e) => {
-    e.preventDefault();
-    setOpen(false);
+
+class MovementsList extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      items: movements,
+      hasMore: true,
+      open: false,
+    }
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  return (
-    <div className={classes.container}>
-      <h3>{title}</h3>
-      <Box
+  handleOpen = () => {
+    this.setState({ open: true });
+  }
+
+  handleClose = (e) => {
+    e.preventDefault();
+    this.setState({ open: false });
+  }
+
+  fetchMoreData = () => {
+    if (this.state.items.length >= 30) {
+      this.setState({ hasMore: false });
+      return;
+    }
+    // a fake async api call like which sends
+    // 20 more records in .5 secs
+    setTimeout(() => {
+      this.setState({
+        items: this.state.items.concat(Array.from({ length: 20 }))
+      });
+    }, 500);
+  };
+
+
+
+  render() {
+    const { classes, title } = this.props;
+    return (
+      <div className={classes.container}>
+        <h3>{title}</h3>
+        <hr />
+        <InfiniteScroll
         className={classes.movementsListContainer}
-        sx={{ bgcolor: 'background.paper' }}
-      >
-        <AutoSizer className={classes.AutoSizer}>
-          {({ width, height }) => (
-            <FixedSizeList
-              height={height}
-              width={width}
-              itemSize={46}
-              itemCount={movements.length}
-              overscanCount={10}
-            >
-              {() => movements.map(mov => (
-                <div>
-                  <ListItem className={classes.ListItem} alignItems="center">
-                    <div className={mov.type == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
-                    <ListItemText
-                      primary={`$ ${mov.amount} - Category: ${mov.category}`}
-                      secondary={
-                        <React.Fragment>
-                          <Typography
-                            sx={{ display: 'inline' }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
-                          >
-                            {mov.date}
-                          </Typography>
-                          {` - ${mov.description}`}
-                        </React.Fragment>
-                      }
-                    />
-                    <IconButton aria-label="edit" onClick={handleOpen}>
-                      <EditIcon fontSize="inherit" />
-                    </IconButton>
-                  </ListItem>
-                  <Divider />
-                </div>
-              ))}
-            </FixedSizeList>
-          )}
-        </AutoSizer>
-      </Box>
-      <MovementForm open={open} handleClose={handleClose}/>
-      {fab && <FloatingActionButton onClick={handleOpen}></FloatingActionButton>}
-    </div>
-  );
+          dataLength={this.state.items.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        >
+          {this.state.items.map((mov) => (
+            <div>
+              <ListItem className={classes.ListItem} alignItems="center">
+                <div className={mov.type == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
+                <ListItemText
+                  primary={`$ ${mov.amount} - Category: ${mov.category}`}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: 'inline' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {mov.date}
+                      </Typography>
+                      {` - ${mov.description}`}
+                    </React.Fragment>
+                  }
+                />
+                <IconButton aria-label="edit" onClick={this.handleOpen}>
+                  <EditIcon fontSize="inherit" />
+                </IconButton>
+              </ListItem>
+              <Divider />
+            </div>
+          ))}
+        </InfiniteScroll>
+        <div>
+          <MovementForm open={this.state.open} handleClose={this.handleClose} />
+        </div>
+      </div>
+    );
+  }
 }
+
 
 export default withStyles(styles)(MovementsList);
