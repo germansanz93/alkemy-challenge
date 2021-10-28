@@ -1,6 +1,21 @@
 export default {
-  Listitem:{
+  listContainer: {
+    height: '100%',
+  },
+  list: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  itemContainer:{
+    height: 'inherit',
+  },
+  ListItem:{
     position: 'relative',
+    height: 'inherit',
+  },
+  listItemText:{
+    textAlign: 'center',
   },
   leftColorBarGreen: {
     position: 'absolute',

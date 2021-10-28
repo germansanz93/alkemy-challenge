@@ -21,27 +21,31 @@ function Dashboard(props) {
   return (
     <div className={classes.mainContainer}>
       <h2>Dashboard</h2>
-      <div className={classes.card}>
-        <h3 className={classes.cardTitle}>Summary</h3>
-        <SummaryBox title={'Balance'} total={'$ 3333'} type={1}/>
+      <div className={classes.cardsContainer}>
+        {/* <div className={classes.leftContainer}> */}
+          <div className={`${classes.balance} ${classes.card}`}>
+            <h3 className={classes.cardTitle}>Summary</h3>
+            <SummaryBox title={'Balance'} total={'$ 3333'} type={1} />
+          </div>
+          <div className={`${classes.summariesContainer} ${classes.card}`}>
+            <h3 className={classes.cardTitle}>Monthly movements</h3>
+            <SummaryBox title={'Total incomes:'} total={'$ 1234'} type={1} />
+            <SummaryBox title={'Total expenses:'} total={'$ 1234'} type={2} />
+            <SummaryBox title={'Month incomes:'} total={'$ 1234'} type={1} />
+            <SummaryBox title={'Month expenses:'} total={'$ 1234'} type={2} />
+          </div>
+          <div className={`${classes.barsContainer} ${classes.card}`}>
+            <h3 className={classes.cardTitle}>Plot</h3>
+            <Plot />
+          </div>
+        {/* </div> */}
+        <div className={`${classes.recentsContainer} ${classes.card}`}>
+          <h3 className={classes.cardTitle}>Recents</h3>
+          <Recents className={classes.recents} />
+        </div>
       </div>
-      <div className={`${classes.summariesContainer} ${classes.card}`}>
-        <h3 className={classes.cardTitle}>Monthly movements</h3>
-        <SummaryBox title={'Total incomes:'} total={'$ 1234'} type={1}/>
-        <SummaryBox title={'Total expenses:'} total={'$ 1234'} type={2}/>
-        <SummaryBox title={'Month incomes:'} total={'$ 1234'} type={1}/>
-        <SummaryBox title={'Month expenses:'} total={'$ 1234'} type={2}/>
-      </div>
-      <div className={`${classes.barsContainer} ${classes.card}`}>
-        <h3 className={classes.cardTitle}>Plot</h3>
-        <Plot/>
-      </div>
-      <div className={`${classes.recentsContainer} ${classes.card}`}>
-        <h3 className={classes.cardTitle}>Recents</h3>
-          <Recents/>
-      </div>
-      <FloatingActionBtn onClick={handleOpen}/>
-      <MovementForm open={open} handleClose={handleClose}/>
+      <FloatingActionBtn onClick={handleOpen} />
+      <MovementForm open={open} handleClose={handleClose} />
     </div>
   )
 }

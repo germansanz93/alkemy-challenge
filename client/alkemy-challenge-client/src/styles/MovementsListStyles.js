@@ -11,6 +11,9 @@ export default {
   Listitem:{
     position: 'relative',
   },
+  listItemText:{
+    textAlign: 'center'
+  },
   leftColorBarGreen: {
     position: 'absolute',
     top: '0',

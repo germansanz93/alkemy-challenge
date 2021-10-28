@@ -73,6 +73,7 @@ class MovementsList extends React.Component {
               <ListItem className={classes.ListItem} alignItems="center">
                 <div className={mov.type == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
                 <ListItemText
+                  className={classes.listItemText}
                   primary={`$ ${mov.amount} - Category: ${mov.category}`}
                   secondary={
                     <React.Fragment>
