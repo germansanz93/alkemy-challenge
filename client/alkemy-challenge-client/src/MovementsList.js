@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import withStyles from "@mui/styles/withStyles";
 import ListItem from '@mui/material/ListItem';
@@ -11,7 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import movements from './movementsSeed'
 import styles from "./styles/MovementsListStyles";
 import MovementForm from './MovementForm';
-import FloatingActionBtn from './FloatingActionBtn'; 
+import FloatingActionBtn from './FloatingActionBtn';
+
 
 class MovementsList extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class MovementsList extends React.Component {
         <h3>{title}</h3>
         <hr />
         <InfiniteScroll
-        className={classes.movementsListContainer}
+          className={classes.movementsListContainer}
           dataLength={this.state.items.length}
           next={this.fetchMoreData}
           hasMore={this.state.hasMore}
@@ -98,7 +99,7 @@ class MovementsList extends React.Component {
           ))}
         </InfiniteScroll>
         <div>
-          {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen}/>}
+          {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen} />}
           <MovementForm open={this.state.open} handleClose={this.handleClose} />
         </div>
       </div>
