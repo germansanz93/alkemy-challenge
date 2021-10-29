@@ -10,9 +10,9 @@ import IconButton from '@mui/material/IconButton';
 
 import movements from './movementsSeed'
 import styles from "./styles/MovementsListStyles";
-import MovementForm from './MovementForm';
+import ModalForm from './ModalForm';
 import FloatingActionBtn from './FloatingActionBtn';
-
+import PieChart from './PieChart';
 
 class MovementsList extends React.Component {
   constructor(props) {
@@ -57,6 +57,7 @@ class MovementsList extends React.Component {
     }
     return (
       <div className={classes.container}>
+        <PieChart title='asdasa'/>
         <h3>{title}</h3>
         <hr />
         <InfiniteScroll
@@ -102,7 +103,7 @@ class MovementsList extends React.Component {
         </InfiniteScroll>
         <div>
           {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen} />}
-          <MovementForm open={this.state.open} handleClose={this.handleClose} />
+          <ModalForm open={this.state.open} handleClose={this.handleClose} />
         </div>
       </div>
     );

@@ -33,6 +33,10 @@ class App extends Component {
     }
   }
 
+  getMovements(){
+    return this.state.movements;
+  }
+
   getRecents() {
     let movements = this.state.movements;
     let recents = movements.slice(0, 10);
@@ -54,21 +58,9 @@ class App extends Component {
     let movements = this.state.movements;
     let movementsByType = movements
       .filter(mov => mov.mov_type_id == type)
-      .reduce((acc, curr) => {
-        return acc + Number(curr.amount);
-      }, 0);
     return movementsByType;
   }
 
-  getExpenses() {
-    let movements = this.state.movements;
-    let expenses = movements
-      .filter(mov => mov.mov_type_id == 2)
-      .reduce((acc, curr) => {
-        return acc + Number(curr.amount);
-      }, 0);
-    return expenses;
-  }
   // get month movements, if type is not passed, returns all month movements else returns the month movements by type
   getMonthMovements(month, type) {
     let movements = this.state.movements;
@@ -108,7 +100,7 @@ class App extends Component {
                 <Dashboard
                   recents={this.getRecents()}
                   balance={this.getBalance()}
-                  movementsByType={(type) => this.getMovementsByType(type)}
+                  movementsByType={(type) => this.getMovementsByType(type).reduce((acc, curr) => {return acc+Number(curr.amount)}, 0)}
                   monthMovements={(month, type) => this.getMonthMovements(month, type)}
                   monthBalances={(type) => this.getMonthBalances(type)}
                 />
@@ -120,21 +112,21 @@ class App extends Component {
           exact
           path="/movements"
           render={() =>
-            <Appbar children={[<MovementsList title='Movements' fab={true} movements={() => this.state.movements} />]} />
+            <Appbar children={[<MovementsList title='Movements' fab={true} movements={this.getMovements()} />]} />
           }
         />
         <Route
           exact
           path="/incomes"
           render={() =>
-            <Appbar children={[<PieChart title='Incomes by category' />, <MovementsList title='Incomes' />]} />
+            <Appbar children={[<PieChart title='Incomes by category' />, <MovementsList title='Incomes' movements={this.getMovementsByType(1)}/>]} />
           }
         />
         <Route
           exact
           path="/expenses"
           render={() =>
-            <Appbar children={[<PieChart title='Expenses by category' />, <MovementsList title='Expenses' />]} />
+            <Appbar children={[<PieChart title='Expenses by category' />, <MovementsList title='Expenses' movements={this.getMovementsByType(2)}/>]} />
           }
         />
       </Switch>

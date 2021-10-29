@@ -12,9 +12,9 @@ function Plot(props) {
     <div className={classes.barsContainer}>
       <AutoSizer>
         {({ height, width }) => (
-          <XYPlot height={height} width={width}>
+          <XYPlot height={height} width={width} margin={{left: 60}}>
             <DiscreteColorLegend
-              style={{ position: 'absolute', left: '50px', top: '10px' }}
+              style={{ position: 'absolute', left: '60px', top: '-40px' }}
               orientation="horizontal"
               items={[
                 {
@@ -27,10 +27,10 @@ function Plot(props) {
                 }
               ]}
             />
-            <VerticalGridLines />
+            <VerticalGridLines/>
             <HorizontalGridLines />
             <XAxis tickValues={Array.from({length:12}, (v, i) => i+1)}/>
-            <YAxis />
+            <YAxis/>
             <VerticalBarSeries data={monthBalances(1)} />
             <VerticalBarSeries data={monthBalances(2)} color='#9a1811' />
           </XYPlot>

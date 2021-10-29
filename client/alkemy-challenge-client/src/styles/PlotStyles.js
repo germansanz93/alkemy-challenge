@@ -1,7 +1,7 @@
 export default {
   barsContainer:{
     height: '20vh',
-    minHeight: '200px'
+    minHeight: '200px',
   },
   '@media (min-width: 1440px)': {
     barsContainer: {

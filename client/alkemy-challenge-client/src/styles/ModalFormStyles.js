@@ -10,6 +10,10 @@ export default {
     paddingTop: '40px',
     backgroundColor: '#f4f0fa',
     boxShadow: 24,
+    maxWidth: '480px',
+    maxHeight: '590px',
+    borderRadius: '10px',
+    padding: '10px',
   },
   modalForm: {
     display: 'flex',
@@ -74,5 +78,5 @@ export default {
     '&:hover': {
       backgroundColor: '#9a1811',
     }
-  }
+  },
 }

@@ -6,7 +6,7 @@ import '../node_modules/react-vis/dist/style.css';
 import Plot from './Plot';
 import Recents from './Recents';
 import styles from './styles/DashboardStyles';
-import MovementForm from './MovementForm';
+import ModalForm from './ModalForm';
 import FloatingActionBtn from './FloatingActionBtn';
 
 function Dashboard(props) {
@@ -19,11 +19,11 @@ function Dashboard(props) {
     monthMovements,
     monthBalances
   } = props;
-  
+
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOpen = () => setOpen(true);
-  
+
   const handleClose = (e) => {
     e.preventDefault();
     setOpen(false);
@@ -42,14 +42,16 @@ function Dashboard(props) {
         </div>
         <div className={`${classes.summariesContainer} ${classes.card}`}>
           <h3 className={classes.cardTitle}>Monthly movements</h3>
-          <SummaryBox title={'Total incomes:'} total={movementsByType(1)} type={1} />
-          <SummaryBox title={'Total expenses:'} total={movementsByType(2)} type={2} />
-          <SummaryBox title={'Month incomes:'} total={monthMovements(new Date().getMonth(),1)} type={1} />
-          <SummaryBox title={'Month expenses:'} total={monthMovements(new Date().getMonth(), 2)} type={2} />
+          <div className={classes.innerSummaries}>
+            <SummaryBox className={classes.summaryBox} title={'Total incomes:'} total={movementsByType(1)} type={1} />
+            <SummaryBox className={classes.summaryBox} title={'Total expenses:'} total={movementsByType(2)} type={2} />
+            <SummaryBox className={classes.summaryBox} title={'Month incomes:'} total={monthMovements(new Date().getMonth(), 1)} type={1} />
+            <SummaryBox className={classes.summaryBox} title={'Month expenses:'} total={monthMovements(new Date().getMonth(), 2)} type={2} />
+          </div>
         </div>
         <div className={`${classes.barsContainer} ${classes.card}`}>
           <h3 className={classes.cardTitle}>Plot</h3>
-          <Plot monthBalances={monthBalances}/>
+          <Plot monthBalances={monthBalances} />
         </div>
         <div className={`${classes.recentsContainer} ${classes.card}`}>
           <h3 className={classes.cardTitle}>Recents</h3>
@@ -57,7 +59,7 @@ function Dashboard(props) {
         </div>
       </div>
       <FloatingActionBtn onClick={handleOpen} />
-      <MovementForm open={open} handleClose={handleClose} />
+      <ModalForm open={open} handleClose={handleClose} />
     </div>
   )
 }

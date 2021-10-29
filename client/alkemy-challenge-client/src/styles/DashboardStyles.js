@@ -61,8 +61,12 @@ export default {
     },
     summariesContainer: {
       gridArea: 'topR',
-      flexDirection: 'row',
     },
+    innerSummaries: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+
     barsContainer: {
       gridArea: 'bottomR',
     },
