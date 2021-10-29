@@ -49,10 +49,12 @@ class MovementsList extends React.Component {
     }, 500);
   };
 
-
-
+  
   render() {
-    const { classes, title } = this.props;
+    const { classes, title, movements, loading } = this.props;
+    if (loading) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className={classes.container}>
         <h3>{title}</h3>
@@ -69,10 +71,10 @@ class MovementsList extends React.Component {
             </p>
           }
         >
-          {this.state.items.map((mov) => (
+          {movements.map((mov) => (
             <div>
               <ListItem className={classes.ListItem} alignItems="center">
-                <div className={mov.type == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
+                <div className={mov.mov_type_id == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
                 <ListItemText
                   className={classes.listItemText}
                   primary={`$ ${mov.amount} - Category: ${mov.category}`}
@@ -84,9 +86,9 @@ class MovementsList extends React.Component {
                         variant="body2"
                         color="text.primary"
                       >
-                        {mov.date}
+                        {mov.mov_date}
                       </Typography>
-                      {` - ${mov.description}`}
+                      {` - ${mov.mov_description}`}
                     </React.Fragment>
                   }
                 />

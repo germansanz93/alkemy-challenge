@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 
 import PieChart from './PieChart';
 import './App.css';
@@ -10,6 +11,27 @@ import MovementsList from './MovementsList';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      movements: [],
+      loading: true,
+    }
+  }
+
+  async componentDidMount() {
+    //Load All movements from the API
+    this.getAllMovements();
+  }
+
+  async getAllMovements() {
+    try {
+      let movements = [];
+      let res = await axios.get('http://localhost:3030/movements');
+      movements = res.data;
+      this.setState({ movements, loading: false });
+      console.log(this.state.movements);
+    } catch (e){
+      console.log(e);
+    }
   }
 
   render() {
@@ -26,7 +48,7 @@ class App extends Component {
           exact
           path="/movements"
           render={() =>
-            <Appbar children={[<MovementsList title='Movements' fab={true}/>]} />
+            <Appbar children={[<MovementsList title='Movements' fab={true} movements={this.state.movements}/>]} />
           }
         />
         <Route
