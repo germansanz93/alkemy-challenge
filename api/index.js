@@ -1,13 +1,18 @@
 //third party modules
 const express = require('express');
 const { Pool } = require('pg');
+const cors = require('cors');
+const morgan = require('morgan');
 
 // *********************************************************************************************
 //settings
 // express
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
+
 app.use(express.json());
+app.use(cors());
+app.use(morgan('dev'));
 
 // db
 if (process.env.NODE_ENV !== 'production') {
@@ -21,6 +26,7 @@ const config = {
   password: process.env.DB_PASSWORD,
 }
 const pool = new Pool(config);
+
 
 // *********************************************************************************************
 
