@@ -11,17 +11,17 @@ import withStyles from '@mui/styles/withStyles';
 import movements from './movementsSeed';
 
 function Recents(props) {
-  const { classes } = props;
+  const { classes, recents } = props;
 
   return (
     <div className={classes.listContainer}>
       <List className={classes.list} dense={true} sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {
-          movements.splice(0, 10).map(mov => (
+          recents.map(mov => (
             <div className={classes.itemContainer}>
               <Divider />
               <ListItem className={classes.ListItem} alignItems="center">
-                <div className={mov.type == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
+                <div className={mov.mov_type_id == 1 ? classes.leftColorBarGreen : classes.leftColorBarRed}></div>
                 <ListItemText
                   className={classes.listItemText}
                   primary={`$ ${mov.amount} - Category: ${mov.category}`}
@@ -33,9 +33,9 @@ function Recents(props) {
                         variant="body2"
                         color="text.primary"
                       >
-                        {mov.date}
+                        {mov.mov_date}
                       </Typography>
-                      {` - ${mov.description}`}
+                      {` - ${mov.mov_description}`}
                     </React.Fragment>
                   }
                 />

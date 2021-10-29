@@ -6,35 +6,7 @@ import styles from './styles/PlotStyles';
 import {AutoSizer} from 'react-virtualized';
 
 function Plot(props) {
-  const { classes } = props;
-  const data = [
-    { x: 1, y: 10 },
-    { x: 2, y: 20 },
-    { x: 3, y: 30 },
-    { x: 4, y: 40 },
-    { x: 5, y: 50 },
-    { x: 6, y: 60 },
-    { x: 7, y: 70 },
-    { x: 8, y: 80 },
-    { x: 9, y: 90 },
-    { x: 10, y: 100 },
-    { x: 11, y: 110 },
-    { x: 12, y: 120 }
-  ]
-  const data2 = [
-    { x: 1, y: 10 },
-    { x: 2, y: 10 },
-    { x: 3, y: 30 },
-    { x: 4, y: 10 },
-    { x: 5, y: 40 },
-    { x: 6, y: 30 },
-    { x: 7, y: 20 },
-    { x: 8, y: 50 },
-    { x: 9, y: 20 },
-    { x: 10, y: 0 },
-    { x: 11, y: 60 },
-    { x: 12, y: 10 }
-  ]
+  const { classes, monthBalances } = props;
 
   return (
     <div className={classes.barsContainer}>
@@ -57,10 +29,10 @@ function Plot(props) {
             />
             <VerticalGridLines />
             <HorizontalGridLines />
-            <XAxis />
+            <XAxis tickValues={Array.from({length:12}, (v, i) => i+1)}/>
             <YAxis />
-            <VerticalBarSeries data={data} />
-            <VerticalBarSeries data={data2} color='#9a1811' />
+            <VerticalBarSeries data={monthBalances(1)} />
+            <VerticalBarSeries data={monthBalances(2)} color='#9a1811' />
           </XYPlot>
         )}
       </AutoSizer>

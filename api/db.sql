@@ -45,3 +45,11 @@ VALUES (1,'2020-01-01',1,'Initial',100),
        (2,'2020-01-10',1,'Salary',2000),
        (3,'2020-01-12',2,'Super',600),
        (1,'2020-01-15',2,'Grocery',60);
+
+INSERT INTO movements (user_id, mov_date, mov_type_id, mov_description, amount)
+VALUES (3,'2020-10-01',2,'Dog food',100),
+       (1,'2020-10-10',2,'Fuel',20),
+       (1,'2020-11-12',2,'Super',60),
+       (2,'2020-11-15',2,'New guitar',550),
+       (1, '2020-10-01', 1, 'Interest', 50),
+       (1, '2020-10-01', 1, 'Crypto', 500);
