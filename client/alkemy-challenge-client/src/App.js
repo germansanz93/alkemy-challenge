@@ -37,7 +37,7 @@ class App extends Component {
     }
   }
 
-  async getDBRecents(){
+  async getDBRecents() {
     try {
       let recents = [];
       let res = await axios.get('http://localhost:3030/movements/recent');
@@ -63,7 +63,7 @@ class App extends Component {
     return this.state.movements;
   }
 
-  getRecents(){
+  getRecents() {
     return this.state.recents;
   }
 
@@ -120,6 +120,7 @@ class App extends Component {
           path="/"
           render={() =>
             <Appbar
+              balance={this.getBalance()}
               children={
                 <Dashboard
                   recents={this.getRecents()}
@@ -137,21 +138,51 @@ class App extends Component {
           exact
           path="/movements"
           render={() =>
-            <Appbar children={[<MovementsList title='Movements' fab={true} movements={this.getMovements()} />]} />
+            <Appbar
+              balance={this.getBalance()}
+              children={
+                <MovementsList
+                  title='Movements'
+                  fab={true}
+                  movements={this.getMovements()}
+                  addMovement={(movement) => this.addMovement(movement)}
+                />
+              }
+            />
           }
         />
         <Route
           exact
           path="/incomes"
           render={() =>
-            <Appbar children={[<PieChart title='Incomes by category' />, <MovementsList title='Incomes' movements={this.getMovementsByType(1)} />]} />
+            <Appbar
+              balance={this.getBalance()}
+              children={[
+                <PieChart title='Incomes by category' />,
+                <MovementsList
+                  title='Incomes'
+                  movements={this.getMovementsByType(1)}
+                  addMovement={(movement) => this.addMovement(movement)}
+                />
+              ]}
+            />
           }
         />
         <Route
           exact
           path="/expenses"
           render={() =>
-            <Appbar children={[<PieChart title='Expenses by category' />, <MovementsList title='Expenses' movements={this.getMovementsByType(2)} />]} />
+            <Appbar
+              balance={this.getBalance()}
+              children={[
+                <PieChart title='Expenses by category' />,
+                <MovementsList
+                  title='Expenses'
+                  movements={this.getMovementsByType(2)}
+                  addMovement={(movement) => this.addMovement(movement)}
+                />
+              ]}
+            />
           }
         />
       </Switch>

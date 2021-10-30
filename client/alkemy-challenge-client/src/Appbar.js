@@ -77,7 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const { classes } = props;
+  const { classes, balance } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -124,7 +124,7 @@ function PersistentDrawerLeft(props) {
           <div className={classes.leftUsrPanel}>
             <div>
               <Typography variant="h6" noWrap>User</Typography>
-              <Typography variant="h6" noWrap>Balance: $1234</Typography>
+              <Typography variant="h6" noWrap>Balance: ${balance}</Typography>
             </div>
           </div>
           <IconButton onClick={handleDrawerClose}>

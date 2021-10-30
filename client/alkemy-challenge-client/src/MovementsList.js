@@ -31,7 +31,7 @@ class MovementsList extends React.Component {
   }
 
   handleClose = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     this.setState({ open: false });
   }
 
@@ -51,7 +51,7 @@ class MovementsList extends React.Component {
 
   
   render() {
-    const { classes, title, movements, loading } = this.props;
+    const { classes, title, movements, loading, addMovement } = this.props;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -87,7 +87,7 @@ class MovementsList extends React.Component {
                         variant="body2"
                         color="text.primary"
                       >
-                        {mov.mov_date}
+                        {mov.mov_date.substring(0, 10)}
                       </Typography>
                       {` - ${mov.mov_description}`}
                     </React.Fragment>
@@ -103,7 +103,7 @@ class MovementsList extends React.Component {
         </InfiniteScroll>
         <div>
           {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen} />}
-          <ModalForm open={this.state.open} handleClose={this.handleClose} />
+          <ModalForm open={this.state.open} handleClose={this.handleClose} addMovement={addMovement}/>
         </div>
       </div>
     );

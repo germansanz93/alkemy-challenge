@@ -34,7 +34,7 @@ function Recents(props) {
                         variant="body2"
                         color="text.primary"
                       >
-                        {mov.mov_date}
+                        {mov.mov_date.substring(0, 10)}
                       </Typography>
                       {` - ${mov.mov_description}`}
                     </React.Fragment>
