@@ -9,31 +9,31 @@ CREATE DATABASE alkemy;
 -- create tables
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    lastname VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
+    lastname VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE movement_types (
     id SERIAL PRIMARY KEY,
-    mov_type VARCHAR(255) UNIQUE
+    mov_type VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
-    category VARCHAR(255) UNIQUE
+    category VARCHAR(255) UNIQUE NOT NULL
 );
 
 CREATE TABLE movements (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id),
-    mov_date DATE,
-    mov_type_id INTEGER REFERENCES movement_types(id),
+    mov_date DATE NOT NULL,
+    mov_type_id INTEGER REFERENCES movement_types(id) NOT NULL,
     mov_description VARCHAR(255),
-    mov_category_id INTEGER REFERENCES categories(id),
-    amount NUMERIC(10,2),
+    mov_category_id INTEGER REFERENCES categories(id) NOT NULL,
+    amount NUMERIC(10,2) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
