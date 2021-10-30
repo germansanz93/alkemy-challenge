@@ -13,16 +13,20 @@ class App extends Component {
     super(props);
     this.state = {
       movements: [],
+      recents: [],
       loading: true,
     }
+    this.addMovement = this.addMovement.bind(this);
   }
 
   async componentDidMount() {
     //Load All movements from the API
-    this.getAllMovements();
+    this.getDBAllMovements();
+    //Load Recents movements from the API
+    this.getDBRecents();
   }
 
-  async getAllMovements() {
+  async getDBAllMovements() {
     try {
       let movements = [];
       let res = await axios.get('http://localhost:3030/movements');
@@ -33,14 +37,34 @@ class App extends Component {
     }
   }
 
-  getMovements(){
+  async getDBRecents(){
+    try {
+      let recents = [];
+      let res = await axios.get('http://localhost:3030/movements/recent');
+      recents = res.data;
+      this.setState({ recents, loading: false });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async addMovement(movement) {
+    try {
+      let res = await axios.post('http://localhost:3030/movements', movement);
+      alert(res.status)
+      this.getDBAllMovements();
+      this.getDBRecents();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  getMovements() {
     return this.state.movements;
   }
 
-  getRecents() {
-    let movements = this.state.movements;
-    let recents = movements.slice(0, 10);
-    return recents;
+  getRecents(){
+    return this.state.recents;
   }
 
   getBalance() {
@@ -78,14 +102,14 @@ class App extends Component {
     return monthMovements;
   }
 
-  getMonthBalances(type){
+  getMonthBalances(type) {
     const monthBalances = [];
-    for(let month = 0; month <= 11; month++){
+    for (let month = 0; month <= 11; month++) {
       let monthBalance = type ? this.getMonthMovements(month, type) : this.getMonthMovements(month);
-      monthBalances.push({x: month+1, y: monthBalance});
+      monthBalances.push({ x: month + 1, y: monthBalance });
     }
     return monthBalances;
-}
+  }
 
 
   render() {
@@ -100,9 +124,10 @@ class App extends Component {
                 <Dashboard
                   recents={this.getRecents()}
                   balance={this.getBalance()}
-                  movementsByType={(type) => this.getMovementsByType(type).reduce((acc, curr) => {return acc+Number(curr.amount)}, 0)}
+                  movementsByType={(type) => this.getMovementsByType(type).reduce((acc, curr) => { return acc + Number(curr.amount) }, 0)}
                   monthMovements={(month, type) => this.getMonthMovements(month, type)}
                   monthBalances={(type) => this.getMonthBalances(type)}
+                  addMovement={(movement) => this.addMovement(movement)}
                 />
               }
             />
@@ -119,14 +144,14 @@ class App extends Component {
           exact
           path="/incomes"
           render={() =>
-            <Appbar children={[<PieChart title='Incomes by category' />, <MovementsList title='Incomes' movements={this.getMovementsByType(1)}/>]} />
+            <Appbar children={[<PieChart title='Incomes by category' />, <MovementsList title='Incomes' movements={this.getMovementsByType(1)} />]} />
           }
         />
         <Route
           exact
           path="/expenses"
           render={() =>
-            <Appbar children={[<PieChart title='Expenses by category' />, <MovementsList title='Expenses' movements={this.getMovementsByType(2)}/>]} />
+            <Appbar children={[<PieChart title='Expenses by category' />, <MovementsList title='Expenses' movements={this.getMovementsByType(2)} />]} />
           }
         />
       </Switch>

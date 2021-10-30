@@ -17,7 +17,8 @@ function Dashboard(props) {
     balance,
     movementsByType,
     monthMovements,
-    monthBalances
+    monthBalances,
+    addMovement
   } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -25,7 +26,7 @@ function Dashboard(props) {
   const handleOpen = () => setOpen(true);
 
   const handleClose = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     setOpen(false);
   }
 
@@ -59,7 +60,7 @@ function Dashboard(props) {
         </div>
       </div>
       <FloatingActionBtn onClick={handleOpen} />
-      <ModalForm open={open} handleClose={handleClose} />
+      <ModalForm open={open} handleClose={handleClose} addMovement={addMovement}/>
     </div>
   )
 }

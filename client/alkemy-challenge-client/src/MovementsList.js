@@ -57,7 +57,7 @@ class MovementsList extends React.Component {
     }
     return (
       <div className={classes.container}>
-        <PieChart title='asdasa'/>
+        <PieChart title='Top 5 expenses categories' />
         <h3>{title}</h3>
         <hr />
         <InfiniteScroll

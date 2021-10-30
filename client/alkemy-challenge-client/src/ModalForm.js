@@ -5,12 +5,12 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import withStyles from '@mui/styles/withStyles';
 
-import styles from './styles/ModalFormStyles';
+import styles from './styles/MovementFormStyles';
 import MovementForm from './MovementForm';
 
 
 function TransitionsModal(props) {
-  const { classes, open, handleClose} = props;
+  const { classes, open, handleClose, addMovement} = props;
   
   return (
     <div>
@@ -27,7 +27,7 @@ function TransitionsModal(props) {
       >
         <Fade in={open}>
           <Box className={classes.root}>
-            <MovementForm handleClose={handleClose}/>
+            <MovementForm handleClose={handleClose} addMovement={addMovement}/>
           </Box>
         </Fade>
       </Modal>

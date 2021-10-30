@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import styles from './styles/RecentsStyles';
 import withStyles from '@mui/styles/withStyles';
+import axios from 'axios';
 
 import movements from './movementsSeed';
 
