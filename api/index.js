@@ -109,7 +109,7 @@ app.get('/movements/:id', async (req, res) => {
 //create movement
 app.post('/movements', async (req, res) => {
   try {
-    const { id, date, type, description, amount } = req.body;
+    const { id, date, type, description, category, amount } = req.body;
     const newMovement = await pool.query('INSERT INTO movements (user_id, mov_date, mov_type_id, mov_description, mov_category_id, amount) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
       [id, date, type, description, category, amount]);
     res.json(newMovement.rows);
@@ -135,6 +135,51 @@ app.put('/movements/:id', async (req, res) => {
     const updateMovement = await pool.query('UPDATE movements SET mov_date = $1, mov_description = $2, amount = $3, mov_category_id = $4, WHERE id = $5 RETURNING *',
       [date, description, amount, category, id]);
     res.json(updateMovement.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
+//categories
+//get all categories
+app.get('/categories', async (req, res) => {
+  try {
+    const categories = await pool.query('SELECT * FROM categories');
+    res.json(categories.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
+//create a category
+app.post('/categories', async (req, res) => {
+  try {
+    const { name } = req.body;
+    const newCategory = await pool.query('INSERT INTO categories (category) VALUES ($1) RETURNING *', [name]);
+    res.json(newCategory.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
+//update a category
+app.put('/categories/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const updateCategory = await pool.query('UPDATE categories SET category = $1 WHERE id = $2 RETURNING *', [name, id]);
+    res.json(updateCategory.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
+//delete a category
+app.delete('/categories/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteCategory = await pool.query('DELETE FROM categories WHERE id = $1 RETURNING *', [id]);
+    res.json(deleteCategory.rows);
   } catch (error) {
     console.error(error.message);
   }

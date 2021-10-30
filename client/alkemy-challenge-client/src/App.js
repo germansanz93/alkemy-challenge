@@ -24,6 +24,8 @@ class App extends Component {
     this.getDBAllMovements();
     //Load Recents movements from the API
     this.getDBRecents();
+    //Load all categories from the API
+    this.getDBAllCategories();
   }
 
   async getDBAllMovements() {
@@ -48,6 +50,17 @@ class App extends Component {
     }
   }
 
+  async getDBAllCategories(){
+    try {
+      let categories = [];
+      let res = await axios.get('http://localhost:3030/categories');
+      categories = res.data;
+      this.setState({ categories, loading: false });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async addMovement(movement) {
     try {
       let res = await axios.post('http://localhost:3030/movements', movement);
@@ -65,6 +78,10 @@ class App extends Component {
 
   getRecents() {
     return this.state.recents;
+  }
+
+  getCategories() {
+    return this.state.categories;
   }
 
   getBalance() {
@@ -125,6 +142,7 @@ class App extends Component {
                 <Dashboard
                   recents={this.getRecents()}
                   balance={this.getBalance()}
+                  categories={this.getCategories()}
                   movementsByType={(type) => this.getMovementsByType(type).reduce((acc, curr) => { return acc + Number(curr.amount) }, 0)}
                   monthMovements={(month, type) => this.getMonthMovements(month, type)}
                   monthBalances={(type) => this.getMonthBalances(type)}

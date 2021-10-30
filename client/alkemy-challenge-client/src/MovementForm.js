@@ -34,7 +34,7 @@ class MovementForm extends Component {
   }
 
   render() {
-    const { classes, handleClose } = this.props;
+    const { classes, handleClose, categories } = this.props;
     return (
       <div>
         <form className={classes.modalForm} onSubmit={this.handleSubmit}>
@@ -59,14 +59,11 @@ class MovementForm extends Component {
             required
           />
           <label className={classes.formInputLabel} htmlFor='category'><PieChartIcon /><p>Category:</p> </label>
-          <input
-            className={classes.inputField}
-            type='text'
-            id='category'
-            name='category'
-            onChange={this.handleChange}
-            required
-          />
+          <select className={classes.inputField} name='category' onChange={this.handleChange}>
+            {categories.map(category => {
+              return <option key={category.id} value={category.id}>{category.category}</option>
+            })}
+          </select>
           <div className={classes.typeRadioBtnsContainer}>
             <label className={classes.formInputLabel} htmlFor='type'><ShuffleIcon /><p>Type: </p></label>
             <div className={classes.typeRadioBtns}>
@@ -102,7 +99,7 @@ class MovementForm extends Component {
             name='amount'
             onChange={this.handleChange}
             min='0'
-            step= '0.1'
+            step='0.1'
             required
           />
           <div className={classes.btnsContainer}>

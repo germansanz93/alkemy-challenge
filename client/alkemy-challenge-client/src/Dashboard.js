@@ -14,6 +14,7 @@ function Dashboard(props) {
     classes,
     loading,
     recents,
+    categories,
     balance,
     movementsByType,
     monthMovements,
@@ -60,7 +61,7 @@ function Dashboard(props) {
         </div>
       </div>
       <FloatingActionBtn onClick={handleOpen} />
-      <ModalForm open={open} handleClose={handleClose} addMovement={addMovement}/>
+      <ModalForm open={open} handleClose={handleClose} addMovement={addMovement} categories={categories}/>
     </div>
   )
 }
