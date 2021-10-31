@@ -24,6 +24,7 @@ export default {
     color: '#444',
     fontSize: '16px',
     padding: '10px',
+    backgroundColor: '#fff',
   },
   formInputLabel:{
     color: '#444',

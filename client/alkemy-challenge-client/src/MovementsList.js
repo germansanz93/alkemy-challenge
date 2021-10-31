@@ -12,7 +12,6 @@ import movements from './movementsSeed'
 import styles from "./styles/MovementsListStyles";
 import ModalForm from './ModalForm';
 import FloatingActionBtn from './FloatingActionBtn';
-import PieChart from './PieChart';
 
 class MovementsList extends React.Component {
   constructor(props) {
@@ -51,14 +50,13 @@ class MovementsList extends React.Component {
 
   
   render() {
-    const { classes, title, movements, loading, addMovement } = this.props;
+    const { classes, title, movements, loading, addMovement, categories } = this.props;
     if (loading) {
       return <div>Loading...</div>;
     }
     return (
-      <div className={classes.container}>
-        <PieChart title='Top 5 expenses categories' />
-        <h3>{title}</h3>
+      <div className={`${classes.container} ${classes.card}`}>
+        <h3 className={classes.cardTitle}>{title}</h3>
         <hr />
         <InfiniteScroll
           className={classes.movementsListContainer}
@@ -103,7 +101,7 @@ class MovementsList extends React.Component {
         </InfiniteScroll>
         <div>
           {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen} />}
-          <ModalForm open={this.state.open} handleClose={this.handleClose} addMovement={addMovement}/>
+          <ModalForm open={this.state.open} handleClose={this.handleClose} addMovement={addMovement} categories={categories}/>
         </div>
       </div>
     );

@@ -1,7 +1,7 @@
 export default {
   root: {
-    backgroundColor: "#683ab713",
-    padding: "4px !important",
+    // backgroundColor: "#683ab713",
+    padding: "0 !important",
     height: "100%",
   },
   leftUsrPanel: {
@@ -15,5 +15,16 @@ export default {
     display: "flex",
     textDecoration: "none",
     color: "#444"
+  },
+  title:{
+    margin: "auto",
+    padding: "20px 0",
+  },
+  childs: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& .formContainer':{
+      display: 'none'
+    },
   }
 };

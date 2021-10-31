@@ -3,6 +3,7 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     maxWidth: '470px',
+    width: '96%',
     margin: '0 auto',
   },
 

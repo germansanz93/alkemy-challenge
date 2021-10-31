@@ -20,7 +20,7 @@ class MovementForm extends Component {
       amount: ''
     }
   }
-
+  
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -36,7 +36,7 @@ class MovementForm extends Component {
   render() {
     const { classes, handleClose, categories } = this.props;
     return (
-      <div>
+      <div class='formContainer'>
         <form className={classes.modalForm} onSubmit={this.handleSubmit}>
           <label className={classes.formInputLabel} htmlFor='date'><CalendarTodayIcon /><p>Date:</p> </label>
           <input
