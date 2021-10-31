@@ -20,13 +20,15 @@ export default {
     flexDirection: 'column',
   },
   inputField: {
+    cursor: 'pointer',
     border: 'none',
     color: '#444',
     fontSize: '16px',
     padding: '10px',
     backgroundColor: '#fff',
   },
-  formInputLabel:{
+  formInputLabel: {
+    cursor: 'pointer',
     color: '#444',
     display: 'flex',
     alignItems: 'center',
@@ -41,7 +43,14 @@ export default {
     padding: '10px',
     justifyContent: 'space-around',
     alignItems: 'center',
-    '& div':{
+    border: 'none',
+    color: '#fff',
+    padding: '10px 30px',
+    borderRadius: '5px',
+    fontSize: '16px',
+    fontFamily: 'inherit',
+    letterSpacing: '2px',
+    '& div': {
       display: 'flex',
       alignItems: 'self-start',
     }
@@ -79,5 +88,11 @@ export default {
     '&:hover': {
       backgroundColor: '#9a1811',
     }
+  },
+  disabled: {
+    backgroundColor: '#aaaaaaaa',
+    border: 'none',
+    color: '#fff',
+    cursor: 'not-allowed',
   },
 }

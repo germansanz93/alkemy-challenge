@@ -11,8 +11,7 @@ import MovementForm from './MovementForm';
 
 
 function TransitionsModal(props) {
-  const { classes, open, handleClose, addMovement, categories} = props;
-  
+  const { classes, open, handleClose, addMovement, editMovement,categories, movement} = props;
   return (
     <div>
       <Modal
@@ -28,7 +27,7 @@ function TransitionsModal(props) {
       >
         <Fade in={open}>
           <Box className={classes.root}>
-            <MovementForm handleClose={handleClose} addMovement={addMovement} categories={categories}/>
+            <MovementForm handleClose={handleClose} addMovement={addMovement} editMovement={editMovement} categories={categories} movement={movement}/>
           </Box>
         </Fade>
       </Modal>

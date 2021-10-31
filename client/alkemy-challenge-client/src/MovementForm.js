@@ -20,7 +20,21 @@ class MovementForm extends Component {
       amount: ''
     }
   }
-  
+
+  componentDidMount() {
+    const { movement } = this.props;
+    if (movement) {
+      this.setState({
+        id: movement.id,
+        date: movement.mov_date.substring(0, 10),
+        description: movement.mov_description,
+        category: movement.category,
+        type: movement.mov_type_id,
+        amount: movement.amount
+      })
+    }
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -29,12 +43,12 @@ class MovementForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addMovement(this.state);
+    this.state.id ? this.props.editMovement(this.state) : this.props.addMovement(this.state);
     this.props.handleClose();
   }
 
   render() {
-    const { classes, handleClose, categories } = this.props;
+    const { classes, handleClose, categories, movement } = this.props;
     return (
       <div class='formContainer'>
         <form className={classes.modalForm} onSubmit={this.handleSubmit}>
@@ -56,37 +70,54 @@ class MovementForm extends Component {
             id='description'
             name='description'
             onChange={this.handleChange}
+            value={this.state.description}
             required
           />
           <label className={classes.formInputLabel} htmlFor='category'><PieChartIcon /><p>Category:</p> </label>
-          <select className={classes.inputField} name='category' onChange={this.handleChange}>
+          <select
+            className={classes.inputField}
+            name='category'
+            onChange={this.handleChange}
+          >
             {categories.map(category => {
-              return <option key={category.id} value={category.id}>{category.category}</option>
+              return <option
+                key={category.id}
+                value={category.id}
+                selected={this.state.category == category.category}
+              >
+                {category.category}
+              </option>
             })}
           </select>
           <div className={classes.typeRadioBtnsContainer}>
             <label className={classes.formInputLabel} htmlFor='type'><ShuffleIcon /><p>Type: </p></label>
-            <div className={classes.typeRadioBtns}>
+            <div className={`${classes.typeRadioBtns} ${movement && classes.disabled} `}>
               <div>
                 <label className={classes.formInputLabel} htmlFor='income'><KeyboardArrowUpIcon /> Income </label>
                 <input
+                  className={classes.inputField}
                   type='radio'
                   id='income'
                   name='type'
+                  checked={this.state.type == '1'}
                   value='1'
                   onChange={this.handleChange}
                   required
+                  disabled={movement}
                 />
               </div>
               <div>
                 <label className={classes.formInputLabel} htmlFor='expense'><KeyboardArrowDownIcon /> Expense </label>
                 <input
+                  className={classes.inputField}
                   type='radio'
                   id='expense'
                   name='type'
+                  checked={this.state.type == '2'}
                   value='2'
                   onChange={this.handleChange}
                   required
+                  disabled={movement}
                 />
               </div>
             </div>
@@ -100,6 +131,7 @@ class MovementForm extends Component {
             onChange={this.handleChange}
             min='0'
             step='0.1'
+            value={movement ? movement.amount : this.state.amount}
             required
           />
           <div className={classes.btnsContainer}>

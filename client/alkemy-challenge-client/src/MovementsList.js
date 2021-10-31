@@ -20,15 +20,26 @@ class MovementsList extends React.Component {
       items: movements,
       hasMore: true,
       open: false,
+      movement: null
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  handleOpen = (movement) => {
+    console.log(movement)
+    if (movement) {
+      this.setState({
+        open: true,
+        movement: movement
+      });
+    } else {
+      this.setState({
+        open: true,
+        movement: null
+      })
+    }
   }
-
   handleClose = (e) => {
     e && e.preventDefault();
     this.setState({ open: false });
@@ -48,9 +59,9 @@ class MovementsList extends React.Component {
     }, 500);
   };
 
-  
+
   render() {
-    const { classes, title, movements, loading, addMovement, categories } = this.props;
+    const { classes, title, movements, loading, addMovement, editMovement, categories } = this.props;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -91,7 +102,7 @@ class MovementsList extends React.Component {
                     </React.Fragment>
                   }
                 />
-                <IconButton aria-label="edit" onClick={this.handleOpen}>
+                <IconButton aria-label="edit" onClick={() => this.handleOpen(mov)}>
                   <EditIcon fontSize="inherit" />
                 </IconButton>
               </ListItem>
@@ -100,8 +111,15 @@ class MovementsList extends React.Component {
           ))}
         </InfiniteScroll>
         <div>
-          {title == 'Movements' && <FloatingActionBtn onClick={this.handleOpen} />}
-          <ModalForm open={this.state.open} handleClose={this.handleClose} addMovement={addMovement} categories={categories}/>
+          {title == 'Movements' && <FloatingActionBtn onClick={() => this.handleOpen(false)} />}
+          <ModalForm
+            open={this.state.open}
+            handleClose={this.handleClose}
+            addMovement={addMovement}
+            editMovement={editMovement}
+            categories={categories}
+            movement={this.state.movement}
+          />
         </div>
       </div>
     );

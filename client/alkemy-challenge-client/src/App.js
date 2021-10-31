@@ -58,7 +58,7 @@ class App extends Component {
       console.log(e);
     }
   }
-
+  
   async getDBAllCategories() {
     try {
       let categories = [];
@@ -69,16 +69,42 @@ class App extends Component {
       console.log(e);
     }
   }
-
+  
+  async updateDBMovement(movement) {
+    try{
+      let res = await axios.put('http://localhost:3030/movements/' + movement.id, movement);
+      alert(res.status)
+      const movements = await this.getDBAllMovements();
+      const recents = await this.getDBRecents();
+      this.setState({
+        movements: movements,
+        recents: recents,
+        loading: false
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
   async addMovement(movement) {
     try {
       let res = await axios.post('http://localhost:3030/movements', movement);
       alert(res.status)
-      this.getDBAllMovements();
-      this.getDBRecents();
+      const movements = await this.getDBAllMovements();
+      const recents = await this.getDBRecents();
+      this.setState({
+        movements: movements,
+        recents: recents,
+        loading: false
+      });
     } catch (e) {
       console.log(e);
     }
+  }
+
+
+  async editMovement(movement) {
+    this.updateDBMovement(movement);
   }
 
   getMovements() {
@@ -169,6 +195,7 @@ class App extends Component {
                     fab={true}
                     movements={this.getMovements()}
                     addMovement={(movement) => this.addMovement(movement)}
+                    editMovement={(movement) => this.editMovement(movement)}
                     categories={this.getCategories()}
                   />]
                 }
