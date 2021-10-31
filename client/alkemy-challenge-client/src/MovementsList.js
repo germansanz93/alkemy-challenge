@@ -20,7 +20,7 @@ class MovementsList extends React.Component {
       items: movements,
       hasMore: true,
       open: false,
-      movement: null
+      movement: null,
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -66,7 +66,7 @@ class MovementsList extends React.Component {
       return <div>Loading...</div>;
     }
     return (
-      <div className={`${classes.container} ${classes.card}`}>
+      <div className={`${classes.container} ${classes.card} movementList`}>
         <h3 className={classes.cardTitle}>{title}</h3>
         <hr />
         <InfiniteScroll
@@ -111,7 +111,7 @@ class MovementsList extends React.Component {
           ))}
         </InfiniteScroll>
         <div>
-          {title == 'Movements' && <FloatingActionBtn onClick={() => this.handleOpen(false)} />}
+          {title == 'Movements' && <FloatingActionBtn onClick={() => this.handleOpen(false)}/>}
           <ModalForm
             open={this.state.open}
             handleClose={this.handleClose}

@@ -48,9 +48,11 @@ class MovementForm extends Component {
   }
 
   render() {
-    const { classes, handleClose, categories, movement } = this.props;
+    const { classes, handleClose, categories, movement, title } = this.props;
     return (
       <div class='formContainer'>
+        
+        <h3 className={classes.cardTitle}>{title}</h3>
         <form className={classes.modalForm} onSubmit={this.handleSubmit}>
           <label className={classes.formInputLabel} htmlFor='date'><CalendarTodayIcon /><p>Date:</p> </label>
           <input

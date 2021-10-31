@@ -6,6 +6,7 @@ export default {
   },
   floatingBtn: {
     backgroundColor: "#683ab7 !important",
-    color: '#fff !important'
-  }
+    color: '#fff !important',
+  },
+
 }

@@ -1,14 +1,16 @@
 export default {
   container: {
-    height: '100%',
+    height: '80vh',
+    maxHeight: '670px',
+    minHeight: '630px',
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '470px',
+    maxWidth: '520px',
     width: '96%',
     margin: '0 auto',
+    overflow: 'scroll'
   },
   movementsListContainer: {
-    height: '100%',
     backgroundColor: '#fff',
   },
   card: {
@@ -43,5 +45,4 @@ export default {
     width: '8px',
     backgroundColor: '#9a1811',
   },
-
 } 

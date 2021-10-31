@@ -16,7 +16,7 @@ class App extends Component {
       movements: [],
       recents: [],
       loading: true,
-      categories: []
+      categories: [],
     }
     this.addMovement = this.addMovement.bind(this);
   }
@@ -27,7 +27,7 @@ class App extends Component {
     //Load Recents movements from the API
     const recents = await this.getDBRecents();
     //Load all categories from the API
-    const categories  = await this.getDBAllCategories();
+    const categories = await this.getDBAllCategories();
 
     this.setState({
       movements: movements,
@@ -58,7 +58,7 @@ class App extends Component {
       console.log(e);
     }
   }
-  
+
   async getDBAllCategories() {
     try {
       let categories = [];
@@ -69,9 +69,9 @@ class App extends Component {
       console.log(e);
     }
   }
-  
+
   async updateDBMovement(movement) {
-    try{
+    try {
       let res = await axios.put('http://localhost:3030/movements/' + movement.id, movement);
       alert(res.status)
       const movements = await this.getDBAllMovements();
@@ -85,7 +85,7 @@ class App extends Component {
       console.log(e);
     }
   }
-  
+
   async addMovement(movement) {
     try {
       let res = await axios.post('http://localhost:3030/movements', movement);
@@ -163,7 +163,6 @@ class App extends Component {
     return monthBalances;
   }
 
-
   render() {
     return (
       <div className="App">
@@ -186,10 +185,10 @@ class App extends Component {
             path="/movements"
             render={() =>
               <Appbar
-              title="Movements"
+                title="Movements"
                 balance={this.getBalance()}
                 children={[
-                  <MovementForm categories={this.getCategories()} />,
+                  <MovementForm categories={this.getCategories()} title={'New Movement'}/>,
                   <MovementsList
                     title='Movements'
                     fab={true}
@@ -197,7 +196,8 @@ class App extends Component {
                     addMovement={(movement) => this.addMovement(movement)}
                     editMovement={(movement) => this.editMovement(movement)}
                     categories={this.getCategories()}
-                  />]
+                  />
+                ]
                 }
               />
             }
