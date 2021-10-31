@@ -146,7 +146,6 @@ app.put(
   '/movements/:id',
   body('id').isNumeric().notEmpty().withMessage('Invalid or null id'),
   body('date').isISO8601().notEmpty().withMessage('Invalid or null date format'),
-  body('type').isNumeric().notEmpty().withMessage('Invalid or null type'),
   body('description').isString().withMessage('Invalid description'),
   body('category').isNumeric().notEmpty().withMessage('Invalid or null category'),
   body('amount').isNumeric().notEmpty().withMessage('Invalid or null amount'),
@@ -157,8 +156,8 @@ app.put(
     }
     try {
       const { id } = req.params;
-      const { date, description, amount } = req.body;
-      const updateMovement = await pool.query('UPDATE movements SET mov_date = $1, mov_description = $2, amount = $3, mov_category_id = $4, WHERE id = $5 RETURNING *',
+      const { date, description, category, amount} = req.body;
+      const updateMovement = await pool.query('UPDATE movements SET mov_date = $1, mov_description = $2, amount = $3, mov_category_id = $4 WHERE id = $5 RETURNING *',
         [date, description, amount, category, id]);
       res.json(updateMovement.rows);
     } catch (error) {
