@@ -165,7 +165,7 @@ function PersistentDrawerLeft(props) {
               <ListItemText primary="Expenses" />
             </Link>
           </ListItem>
-          <ListItem button key="Categories" onClick={handleDrawerClose}>
+          <ListItem button key="Categories" onClick={handleDrawerClose} disabled>
             <Link className={classes.link} to={"/"}>
               <ListItemIcon>
                 <PieChartIcon />

@@ -16,8 +16,7 @@ class MovementForm extends Component {
       date: new Date().toISOString().substring(0, 10),
       description: '',
       category: '',
-      type: '',
-      amount: ''
+      amount: 0
     }
   }
 
@@ -32,26 +31,69 @@ class MovementForm extends Component {
         type: movement.mov_type_id,
         amount: movement.amount
       })
+    } else {
+      this.setState({
+        date: new Date().toISOString().substring(0, 10),
+        description: '',
+        category: 1,
+        type: '1',
+        amount: 0
+      })
     }
   }
 
+  componentDidUpdate() {
+    if(!this.state.type) this.renderUpdate();
+  }
+
+  renderUpdate() {
+
+    if(this.props.title == 'New Income'){
+      this.setState({
+        type: '1'
+      })
+    }else {
+      this.setState({
+        type: '2'
+      })
+    }
+  }
+  
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
+  
+  handleCreate = () => {
+    const { addMovement, movement } = this.props;
+    const { date, description, category, type, amount } = this.state;
+    addMovement({ date, description, category, type, amount });
+  }
+
+  handleUpdate = () => {
+    const { editMovement, handleClose } = this.props;
+    const { id, date, description, category, type, amount } = this.state;
+    editMovement({ id, date, description, category, type, amount });
+    handleClose();
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.state.id ? this.props.editMovement(this.state) : this.props.addMovement(this.state);
-    this.props.handleClose();
+    this.state.id ? this.handleUpdate() : this.handleCreate();
+    this.setState({
+      date: new Date().toISOString().substring(0, 10),
+      description: '',
+      category: '1',
+      type: '',
+      amount: 0
+    })
   }
 
   render() {
     const { classes, handleClose, categories, movement, title } = this.props;
     return (
       <div class='formContainer'>
-        
         <h3 className={classes.cardTitle}>{title}</h3>
         <form className={classes.modalForm} onSubmit={this.handleSubmit}>
           <label className={classes.formInputLabel} htmlFor='date'><CalendarTodayIcon /><p>Date:</p> </label>
@@ -85,7 +127,7 @@ class MovementForm extends Component {
               return <option
                 key={category.id}
                 value={category.id}
-                selected={this.state.category == category.category}
+                selected={category.category == this.state.category}
               >
                 {category.category}
               </option>
@@ -93,7 +135,7 @@ class MovementForm extends Component {
           </select>
           <div className={classes.typeRadioBtnsContainer}>
             <label className={classes.formInputLabel} htmlFor='type'><ShuffleIcon /><p>Type: </p></label>
-            <div className={`${classes.typeRadioBtns} ${movement && classes.disabled} `}>
+            <div className={`${classes.typeRadioBtns} ${movement && classes.disabled} ${title == 'New Income' && classes.disabled}`}>
               <div>
                 <label className={classes.formInputLabel} htmlFor='income'><KeyboardArrowUpIcon /> Income </label>
                 <input
@@ -101,7 +143,7 @@ class MovementForm extends Component {
                   type='radio'
                   id='income'
                   name='type'
-                  checked={this.state.type == '1'}
+                  checked={this.state.type == '1' || title == 'New Income' || title == 'New Expense'}
                   value='1'
                   onChange={this.handleChange}
                   required
@@ -115,7 +157,7 @@ class MovementForm extends Component {
                   type='radio'
                   id='expense'
                   name='type'
-                  checked={this.state.type == '2'}
+                  checked={this.state.type == '2' || title == 'New Expense'}
                   value='2'
                   onChange={this.handleChange}
                   required
@@ -126,14 +168,13 @@ class MovementForm extends Component {
           </div>
           <label className={classes.formInputLabel} htmlFor='amount'><MonetizationOnIcon /><p>Amount:</p></label>
           <input
-            className={classes.inputField}
-            type='number'
-            id='amount'
-            name='amount'
             onChange={this.handleChange}
+            value={parseInt(this.state.amount)}
+            name='amount'
+            id='amount'
+            className={classes.inputField}
+            step='0.01'
             min='0'
-            step='0.1'
-            value={movement ? movement.amount : this.state.amount}
             required
           />
           <div className={classes.btnsContainer}>

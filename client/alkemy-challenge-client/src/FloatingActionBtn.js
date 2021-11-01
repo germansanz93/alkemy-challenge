@@ -7,7 +7,7 @@ import withStyles from '@mui/styles/withStyles';
 import styles from './styles/FloatingActionBtnStyles'
 
 function FloatingActionButton(props) {
-  const { classes, onClick } = props;
+  const { classes, onClick, title } = props;
 
   const [width, setWidth] = React.useState({
     width: window.innerWidth,
@@ -26,7 +26,7 @@ function FloatingActionButton(props) {
     return width.width < 780;
   }
 
-  if(isSmallScreen()){
+  if(isSmallScreen() || title == 'Dashboard'){
   return (
       <Box className={classes.fabBox} sx={{ '& > :not(style)': { m: 1 } }}>
         <Fab className={classes.floatingBtn} aria-label="add" onClick={onClick}>

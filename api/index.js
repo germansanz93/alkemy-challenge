@@ -225,6 +225,17 @@ app.delete('/categories/:id', async (req, res) => {
   }
 })
 
+//get a category id by name
+app.get('/categories/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const category = await pool.query('SELECT * FROM categories WHERE category = $1', [name]);
+    res.json(category.rows[0].id);
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
 // *********************************************************************************************
 
 //server listening

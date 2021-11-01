@@ -70,7 +70,19 @@ class App extends Component {
     }
   }
 
+  async getDBCategoryByName(name) {
+    try {
+      let category = [];
+      let res = await axios.get('http://localhost:3030/categories/' + name);
+      category = res.data;
+      return category;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async updateDBMovement(movement) {
+    movement.category = await this.getDBCategoryByName(movement.category);
     try {
       let res = await axios.put('http://localhost:3030/movements/' + movement.id, movement);
       alert(res.status)
@@ -86,7 +98,23 @@ class App extends Component {
     }
   }
 
-  async addMovement(movement) {
+  async deleteDBMovement(id) {
+    try {
+      let res = await axios.delete('http://localhost:3030/movements/' + id);
+      alert(res.status)
+      const movements = await this.getDBAllMovements();
+      const recents = await this.getDBRecents();
+      this.setState({
+        movements: movements,
+        recents: recents,
+        loading: false
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async addDBMovement(movement) {
     try {
       let res = await axios.post('http://localhost:3030/movements', movement);
       alert(res.status)
@@ -102,9 +130,16 @@ class App extends Component {
     }
   }
 
+  addMovement(movement) {
+    this.addDBMovement(movement);
+  }
 
-  async editMovement(movement) {
+  editMovement(movement) {
     this.updateDBMovement(movement);
+  }
+
+  deleteMovement(id) {
+    this.deleteDBMovement(id);
   }
 
   getMovements() {
@@ -166,10 +201,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Appbar />
+        <Appbar balance={this.getBalance()}/>
         <Switch>
           <Route exact path="/" component={() =>
             <Dashboard
+              title={'Dashboard'}
               recents={this.getRecents()}
               balance={this.getBalance()}
               categories={this.getCategories()}
@@ -177,6 +213,7 @@ class App extends Component {
               monthMovements={(month, type) => this.getMonthMovements(month, type)}
               monthBalances={(type) => this.getMonthBalances(type)}
               addMovement={(movement) => this.addMovement(movement)}
+              updateMovement={(movement) => this.editMovement(movement)}
             />
           }
           />
@@ -188,13 +225,21 @@ class App extends Component {
                 title="Movements"
                 balance={this.getBalance()}
                 children={[
-                  <MovementForm categories={this.getCategories()} title={'New Movement'}/>,
+                  <MovementForm
+                    categories={this.getCategories()}
+                    title={'New Movement'}
+                    addMovement={(movement) => this.addMovement(movement)}
+                    editMovement={(movement) => this.editMovement(movement)}
+                    deleteMovement={(id) => this.deleteMovement(id)}
+                    categories={this.getCategories()}
+                  />,
                   <MovementsList
                     title='Movements'
                     fab={true}
                     movements={this.getMovements()}
                     addMovement={(movement) => this.addMovement(movement)}
                     editMovement={(movement) => this.editMovement(movement)}
+                    deleteMovement={(id) => this.deleteMovement(id)}
                     categories={this.getCategories()}
                   />
                 ]
@@ -209,11 +254,32 @@ class App extends Component {
               <Appbar
                 balance={this.getBalance()}
                 children={[
-                  <PieChart title='Incomes by category' />,
+                  <MovementForm
+                    categories={this.getCategories()}
+                    title='New Income'
+                    addMovement={(movement) => this.addMovement(movement)}
+                    editMovement={(movement) => this.editMovement(movement)}
+                    deleteMovement={(id) => this.deleteMovement(id)}
+                    categories={this.getCategories()}
+                    movement={
+                      {
+                        mov_type_id: 1,
+                        mov_date: new Date().toISOString(),
+                        amount: 0,
+                        description: '',
+                        category: 1
+                      }
+                    }
+                  />,
                   <MovementsList
+                    categories={this.getCategories()}
                     title='Incomes'
+                    fab={true}
                     movements={this.getMovementsByType(1)}
                     addMovement={(movement) => this.addMovement(movement)}
+                    editMovement={(movement) => this.editMovement(movement)}
+                    deleteMovement={(id) => this.deleteMovement(id)}
+                    categories={this.getCategories()}
                   />
                 ]}
               />
@@ -226,12 +292,32 @@ class App extends Component {
               <Appbar
                 balance={this.getBalance()}
                 children={[
-                  <PieChart title='Expenses by category' />,
+                  <MovementForm
+                    movement={
+                      {
+                        mov_type_id: 1,
+                        mov_date: new Date().toISOString(),
+                        amount: 0,
+                        description: '',
+                        category: 1
+                      }
+                    }
+                    categories={this.getCategories()}
+                    title='New Expense'
+                    addMovement={(movement) => this.addMovement(movement)}
+                    editMovement={(movement) => this.editMovement(movement)}
+                    deleteMovement={(id) => this.deleteMovement(id)}
+                    categories={this.getCategories()}
+                  />,
                   <MovementsList
                     title='Expenses'
                     movements={this.getMovementsByType(2)}
                     addMovement={(movement) => this.addMovement(movement)}
-                  />
+                    addMovement={(movement) => this.addMovement(movement)}
+                    editMovement={(movement) => this.editMovement(movement)}
+                    deleteMovement={(id) => this.deleteMovement(id)}
+                    categories={this.getCategories()}
+                  />,
                 ]}
               />
             }

@@ -6,6 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
 import movements from './movementsSeed'
@@ -27,7 +28,6 @@ class MovementsList extends React.Component {
   }
 
   handleOpen = (movement) => {
-    console.log(movement)
     if (movement) {
       this.setState({
         open: true,
@@ -61,7 +61,7 @@ class MovementsList extends React.Component {
 
 
   render() {
-    const { classes, title, movements, loading, addMovement, editMovement, categories } = this.props;
+    const { classes, title, movements, loading, addMovement, editMovement, deleteMovement, categories } = this.props;
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -105,13 +105,16 @@ class MovementsList extends React.Component {
                 <IconButton aria-label="edit" onClick={() => this.handleOpen(mov)}>
                   <EditIcon fontSize="inherit" />
                 </IconButton>
+                <IconButton aria-label="edit" onClick={() => deleteMovement(mov.id)}>
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
               </ListItem>
               <Divider />
             </div>
           ))}
         </InfiniteScroll>
         <div>
-          {title == 'Movements' && <FloatingActionBtn onClick={() => this.handleOpen(false)}/>}
+          <FloatingActionBtn title={title} onClick={() => this.handleOpen(false)}/>
           <ModalForm
             open={this.state.open}
             handleClose={this.handleClose}

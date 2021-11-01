@@ -12,6 +12,7 @@ import FloatingActionBtn from './FloatingActionBtn';
 function Dashboard(props) {
   const {
     classes,
+    title,
     loading,
     recents,
     categories,
@@ -60,7 +61,7 @@ function Dashboard(props) {
           <Recents className={classes.recents} recents={recents} />
         </div>
       </div>
-      <FloatingActionBtn onClick={handleOpen} />
+      <FloatingActionBtn title={title} onClick={handleOpen} />
       <ModalForm open={open} handleClose={handleClose} addMovement={addMovement} categories={categories}/>
     </div>
   )
