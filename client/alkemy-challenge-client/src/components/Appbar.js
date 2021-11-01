@@ -24,7 +24,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import withStyles from "@mui/styles/withStyles";
 
-import styles from "./styles/AppbarStyles";
+import styles from "../styles/AppbarStyles";
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;

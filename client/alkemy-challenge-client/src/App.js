@@ -2,12 +2,11 @@ import { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
-import PieChart from './PieChart';
 import './App.css';
-import Appbar from './Appbar';
-import Dashboard from './Dashboard';
-import MovementsList from './MovementsList';
-import MovementForm from './MovementForm';
+import Appbar from './components/Appbar';
+import Dashboard from './components/Dashboard';
+import MovementsList from './components/MovementsList';
+import MovementForm from './components/MovementForm';
 
 class App extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import withStyles from '@mui/styles/withStyles';
 import React from 'react'
 import { RadialChart } from "react-vis";
 
-import style from './styles/PieChartStyles'
+import style from '../styles/PieChartStyles'
 
 function PieChart(props) {
   const { title}  = props;

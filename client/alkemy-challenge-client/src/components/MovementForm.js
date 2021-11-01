@@ -7,7 +7,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import withStyles from '@mui/styles/withStyles';
-import styles from './styles/MovementFormStyles';
+import styles from '../styles/MovementFormStyles';
 
 class MovementForm extends Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import withStyles from '@mui/styles/withStyles';
 
-import styles from './styles/FloatingActionBtnStyles'
+import styles from '../styles/FloatingActionBtnStyles'
 
 function FloatingActionButton(props) {
   const { classes, onClick, title } = props;

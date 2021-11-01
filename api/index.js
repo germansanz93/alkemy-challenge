@@ -6,6 +6,12 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const { body, validationResult } = require('express-validator');
 
+const movementsController = require('./controllers/movementsController');
+const categoriesController = require('./controllers/categoriesController');
+
+const validateMovement = require('./movementValidator');
+
+
 // *********************************************************************************************
 //settings
 // express
@@ -42,199 +48,29 @@ app.get('/', (req, res) => {
 
 //movements
 //get all movements
-app.get('/movements', async (req, res) => {
-
-  let query;
-
-  //get movements using operation type and month filters
-  if (req.query.type && req.query.month) {
-    const { type, month } = req.query;
-    query = {
-      text: 'SELECT * FROM movements WHERE EXTRACT(MONTH FROM mov_date) = $1 AND mov_type_id = $2',
-      values: [month, type]
-    };
-  }
-  //get movements using operation type filter
-  else if (req.query.type) {
-    const type = req.query.type;
-    query = {
-      text: 'SELECT * FROM movements WHERE mov_type_id = $1',
-      values: [type]
-    };
-  }
-  //get movements using month filter
-  else if (req.query.month) {
-    const month = req.query.month;
-    query = {
-      text: 'SELECT * FROM movements WHERE EXTRACT(MONTH FROM mov_date) = $1',
-      values: [month]
-    };
-  }
-  //if not using queries, get all movements
-  else {
-    query = 'SELECT movements.id, user_id, mov_date, mov_type_id, mov_description, category, amount FROM movements \
-    INNER JOIN categories \
-    ON mov_category_id = categories.id;'
-  }
-
-  //execute query
-  try {
-    const movements = await pool.query(query);
-    res.json(movements.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
+app.get('/movements', movementsController.movements)
 //get last 10 movements
-app.get('/movements/recent', async (req, res) => {
-  const query = 'SELECT movements.id, user_id, mov_date, mov_type_id, mov_description, category, amount FROM movements \
-                INNER JOIN categories \
-                ON mov_category_id = categories.id \
-                ORDER BY mov_date DESC \
-                LIMIT 10;';
-  try {
-    const recent_movements = await pool.query(query);
-    res.json(recent_movements.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
+app.get('/movements/recent', movementsController.recents)
 //get one movement
-app.get('/movements/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const movement = await pool.query('SELECT * FROM movements WHERE id = $1', [id]);
-    res.json(movement.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
+app.get('/movements/:id', movementsController.movement)
 //create movement
-app.post(
-  '/movements',
-  body('date').isISO8601().notEmpty().withMessage('Invalid or null date format'),
-  body('type').isNumeric().notEmpty().withMessage('Invalid or null type'),
-  body('description').isString().withMessage('Invalid description'),
-  body('category').isNumeric().notEmpty().withMessage('Invalid or null category'),
-  body('amount').isNumeric().notEmpty().withMessage('Invalid or null amount'),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const { id, date, type, description, category, amount } = req.body;
-      const newMovement = await pool.query('INSERT INTO movements (user_id, mov_date, mov_type_id, mov_description, mov_category_id, amount) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [id, date, type, description, category, amount]);
-      res.json(newMovement.rows);
-    } catch (error) {
-      console.error(error.message);
-    }
-  })
+app.post('/movements',movementsController.create)
 //delete movement
-app.delete('/movements/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deleteMovement = await pool.query('DELETE FROM movements WHERE id = $1 RETURNING *', [id]);
-    res.json(deleteMovement.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
+app.delete('/movements/:id', movementsController.delete)
 //update movement
-app.put(
-  '/movements/:id',
-  body('id').isNumeric().notEmpty().withMessage('Invalid or null id'),
-  body('date').isISO8601().notEmpty().withMessage('Invalid or null date format'),
-  body('description').isString().withMessage('Invalid description'),
-  body('category').isNumeric().notEmpty().withMessage('Invalid or null category'),
-  body('amount').isNumeric().notEmpty().withMessage('Invalid or null amount'),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const { id } = req.params;
-      const { date, description, category, amount} = req.body;
-      const updateMovement = await pool.query('UPDATE movements SET mov_date = $1, mov_description = $2, amount = $3, mov_category_id = $4 WHERE id = $5 RETURNING *',
-        [date, description, amount, category, id]);
-      res.json(updateMovement.rows);
-    } catch (error) {
-      console.error(error.message);
-    }
-  })
+app.put('/movements/:id', movementsController.update)
 
 //categories
 //get all categories
-app.get('/categories', async (req, res) => {
-  try {
-    const categories = await pool.query('SELECT * FROM categories');
-    res.json(categories.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
-
+app.get('/categories', categoriesController.categories)
 //create a category
-app.post(
-  '/categories',
-  body('category').isString().notEmpty().withMessage('Invalid or null category'),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const { category } = req.body;
-      const newCategory = await pool.query('INSERT INTO categories (category) VALUES ($1) RETURNING *', [name]);
-      res.json(newCategory.rows);
-    } catch (error) {
-      console.error(error.message);
-    }
-  })
-
+app.post('/categories', categoriesController.create)
 //update a category
-app.put(
-  '/categories/:id',
-  body('id').isNumeric().notEmpty().withMessage('Invalid or null id'),
-  body('category').isString().notEmpty().withMessage('Invalid or null category'),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const { id } = req.params;
-      const { category } = req.body;
-      const updateCategory = await pool.query('UPDATE categories SET category = $1 WHERE id = $2 RETURNING *', [category, id]);
-      res.json(updateCategory.rows);
-    } catch (error) {
-      console.error(error.message);
-    }
-  })
-
+app.put('/categories/:id', categoriesController.update)
 //delete a category
-app.delete('/categories/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deleteCategory = await pool.query('DELETE FROM categories WHERE id = $1 RETURNING *', [id]);
-    res.json(deleteCategory.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
-
+app.delete('/categories/:id', categoriesController.delete)
 //get a category id by name
-app.get('/categories/:name', async (req, res) => {
-  try {
-    const { name } = req.params;
-    const category = await pool.query('SELECT * FROM categories WHERE category = $1', [name]);
-    res.json(category.rows[0].id);
-  } catch (error) {
-    console.error(error.message);
-  }
-})
+app.get('/categories/:name', categoriesController.category)
 
 // *********************************************************************************************
 

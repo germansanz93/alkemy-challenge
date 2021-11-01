@@ -1,11 +1,11 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
 import SummaryBox from './SummaryBox';
-import '../node_modules/react-vis/dist/style.css';
+import '../../node_modules/react-vis/dist/style.css';
 
 import Plot from './Plot';
 import Recents from './Recents';
-import styles from './styles/DashboardStyles';
+import styles from '../styles/DashboardStyles';
 import ModalForm from './ModalForm';
 import FloatingActionBtn from './FloatingActionBtn';
 

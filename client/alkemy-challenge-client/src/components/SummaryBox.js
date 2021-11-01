@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import styles from './styles/SummaryBoxStyles';
+import styles from '../styles/SummaryBoxStyles';
 
 function SummaryBox(props) {
   const {classes, type} = props;

@@ -1,8 +1,8 @@
 import React from 'react';
-import '../node_modules/react-vis/dist/style.css';
+import '../../node_modules/react-vis/dist/style.css';
 import { XYPlot, VerticalBarSeries, VerticalGridLines, HorizontalGridLines, DiscreteColorLegend, XAxis, YAxis } from 'react-vis';
 import withStyles from '@mui/styles/withStyles';
-import styles from './styles/PlotStyles';
+import styles from '../styles/PlotStyles';
 import {AutoSizer} from 'react-virtualized';
 
 function Plot(props) {

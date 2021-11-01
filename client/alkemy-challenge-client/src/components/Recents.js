@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
-import styles from './styles/RecentsStyles';
+import styles from '../styles/RecentsStyles';
 import withStyles from '@mui/styles/withStyles';
 
 function Recents(props) {

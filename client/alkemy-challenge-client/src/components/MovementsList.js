@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import withStyles from "@mui/styles/withStyles";
 import ListItem from '@mui/material/ListItem';
@@ -9,8 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
-import movements from './movementsSeed'
-import styles from "./styles/MovementsListStyles";
+import styles from "../styles/MovementsListStyles";
 import ModalForm from './ModalForm';
 import FloatingActionBtn from './FloatingActionBtn';
 
@@ -18,7 +17,7 @@ class MovementsList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      items: movements,
+      items: this.props.movements,
       hasMore: true,
       open: false,
       movement: null,
